@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vendora - Edit Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: #eceaf2;
+    color: #282438;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow-x: hidden;
+
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
+
+.app {
+    width: 390px;
+    max-width: 100%;
+    min-height: 100vh;
+
+    background: #f8f7fc;
+
+    padding-bottom: 30px;
+
+    transition:
+        background .25s ease;
+}
+
+@media (max-width: 599px) {
+    body {
+        background: #f8f7fc;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 390px;
+    }
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark {
+    background: #111019;
+    color: #f5f2fa;
+}
+
+body.dark .app {
+    background: #15131e;
+}
+
+body.dark .header {
+    background: #15131e;
+    border-color: #2b2737;
+}
+
+body.dark .form-card,
+body.dark .input-wrap,
+body.dark .icon-option {
+    background: #211e2b;
+    border-color: #332e40;
+}
+
+body.dark .field-label,
+body.dark .page-title,
+body.dark .form-intro h2 {
+    color: #f5f2fa;
+}
+
+body.dark .field-help,
+body.dark .page-subtitle,
+body.dark .form-intro p {
+    color: #aaa4b4;
+}
+
+body.dark input,
+body.dark select {
+    color: #f5f2fa;
+}
+
+body.dark input::placeholder {
+    color: #817b8c;
+}
+
+body.dark .theme-button,
+body.dark .back-btn {
+    background: #29243a;
+}
+
+body.dark .theme-button {
+    color: #f3ce61;
+}
+
+body.dark .back-btn {
+    color: #a995ff;
+}
+
+body.dark .icon-option.active {
+    background: #302651;
+    border-color: #8062ed;
+}
+
+body.dark .cancel-btn {
+    background: #2a2732;
+    color: #bdb7c7;
+}
+
+body.dark .delete-btn {
+    background: #39242a;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    padding: 17px 18px;
+
+    background: #f8f7fc;
+
+    border-bottom: 1px solid #ebe8f2;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.back-btn {
+    width: 39px;
+    height: 39px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #efebff;
+    color: #6545d8;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.page-title {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: -.4px;
+}
+
+.page-subtitle {
+    margin: 2px 0 0;
+
+    color: #898493;
+
+    font-size: 11px;
+}
+
+.theme-button {
+    width: 39px;
+    height: 39px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #efebff;
+
+    color: #6545d8;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    padding: 18px;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.form-card {
+    background: #fff;
+
+    border: 1px solid #ebe8f2;
+
+    border-radius: 19px;
+
+    padding: 18px;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
+}
+
+.form-intro {
+    margin-bottom: 20px;
+}
+
+.form-intro h2 {
+    margin: 0 0 5px;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.form-intro p {
+    margin: 0;
+
+    color: #898493;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+/* =========================================================
+   PRODUCT ID
+========================================================= */
+
+.product-id {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 9px;
+
+    padding: 5px 9px;
+
+    border-radius: 8px;
+
+    background: #f0ecff;
+
+    color: #6748d9;
+
+    font-size: 9px;
+    font-weight: 750;
+}
+
+body.dark .product-id {
+    background: #2a2440;
+    color: #a895ff;
+}
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.field-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #393444;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.required {
+    color: #d94d58;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrap {
+    display: flex;
+    align-items: center;
+
+    min-height: 46px;
+
+    background: #faf9fc;
+
+    border: 1px solid #e5e1ec;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.input-wrap:focus-within {
+    border-color: #8061eb;
+
+    box-shadow:
+        0 0 0 3px rgba(108, 76, 232, .08);
+}
+
+.input-prefix {
+    padding-left: 13px;
+
+    color: #8d8798;
+
+    font-size: 13px;
+}
+
+.input-wrap input,
+.input-wrap select {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 0 13px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #282438;
+
+    font-family: inherit;
+
+    font-size: 13px;
+}
+
+.input-wrap:has(.input-prefix) input {
+    padding-left: 7px;
+}
+
+.input-wrap select {
+    cursor: pointer;
+}
+
+.field-help {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #97919f;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   TWO COLUMNS
+========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+}
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.icon-label {
+    margin-bottom: 9px;
+}
+
+.icon-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 7px;
+}
+
+.icon-option {
+    width: 100%;
+    aspect-ratio: 1;
+
+    border: 1px solid #e6e2ee;
+
+    border-radius: 11px;
+
+    background: #faf9fc;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+
+    transition: .18s ease;
+}
+
+.icon-option:hover {
+    transform: translateY(-1px);
+}
+
+.icon-option.active {
+    background: #f0ebff;
+
+    border-color: #7252e4;
+
+    box-shadow:
+        0 0 0 2px rgba(108, 76, 232, .08);
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.25fr;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.cancel-btn,
+.save-btn {
+    min-height: 47px;
+
+    border-radius: 13px;
+
+    border: 0;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .18s ease;
+}
+
+.cancel-btn {
+    background: #efedf3;
+    color: #666171;
+}
+
+.save-btn {
+    background: #6c4ce8;
+    color: #fff;
+
+    box-shadow:
+        0 8px 18px rgba(108, 76, 232, .18);
+}
+
+.cancel-btn:hover {
+    background: #e6e3eb;
+}
+
+.save-btn:hover {
+    background: #5d3fd0;
+}
+
+.cancel-btn:active,
+.save-btn:active {
+    transform: scale(.985);
+}
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.delete-btn {
+    width: 100%;
+
+    min-height: 44px;
+
+    margin-top: 10px;
+
+    border: 1px solid #f0d9dc;
+
+    border-radius: 12px;
+
+    background: #fff2f3;
+
+    color: #d34d58;
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+}
+
+.delete-btn:hover {
+    background: #ffe8ea;
+}
+
+body.dark .delete-btn {
+    border-color: #513039;
+    color: #ff9099;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-message {
+    display: none;
+
+    margin-top: 7px;
+
+    color: #d94d58;
+
+    font-size: 10px;
+}
+
+.form-group.error .input-wrap {
+    border-color: #d94d58;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 24px;
+
+    width: 350px;
+    max-width: calc(100% - 30px);
+
+    transform:
+        translate(-50%, 100px);
+
+    background: #282438;
+    color: #fff;
+
+    padding: 13px 15px;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-align: center;
+
+    opacity: 0;
+
+    z-index: 100;
+
+    transition:
+        transform .25s ease,
+        opacity .25s ease;
+}
+
+.toast.show {
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(25, 21, 35, .48);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 200;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 350px;
+    max-width: 100%;
+
+    background: #fff;
+
+    border-radius: 19px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, .20);
+}
+
+body.dark .modal {
+    background: #211e2b;
+}
+
+.modal h3 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+}
+
+.modal p {
+    margin: 0 0 18px;
+
+    color: #898391;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+.modal-button {
+    min-height: 43px;
+
+    border: 0;
+
+    border-radius: 11px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+}
+
+.modal-cancel {
+    background: #eeeaf3;
+    color: #666171;
+}
+
+.modal-delete {
+    background: #d94b55;
+    color: #fff;
+}
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media (max-width: 350px) {
+
+    .main {
+        padding: 14px;
+    }
+
+    .header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .icon-grid {
+        grid-template-columns:
+            repeat(5, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="header-row">
+
+            <div class="header-left">
+
+                <a
+                    href="products.html"
+                    class="back-btn"
+                    aria-label="Back to products"
+                >
+                    ←
+                </a>
+
+                <div>
+
+                    <h1 class="page-title">
+                        Edit Product
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Update your product information
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="theme-button"
+                id="themeButton"
+                aria-label="Toggle dark mode"
+            >
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+        <form
+            id="productForm"
+            class="form-card"
+            novalidate
+        >
+
+            <div class="form-intro">
+
+                <h2>
+                    Product Information
+                </h2>
+
+                <p>
+                    Update the details of this product
+                    and save your changes.
+                </p>
+
+                <div
+                    class="product-id"
+                    id="productId"
+                >
+                    Product ID: —
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT NAME -->
+
+            <div
+                class="form-group"
+                id="nameGroup"
+            >
+
+                <label
+                    class="field-label"
+                    for="productName"
+                >
+                    Product Name
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrap">
+
+                    <input
+                        type="text"
+                        id="productName"
+                        maxlength="80"
+                        placeholder="e.g. Rice"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <span class="error-message">
+                    Please enter a product name.
+                </span>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label
+                    class="field-label"
+                    for="category"
+                >
+                    Category
+                </label>
+
+                <div class="input-wrap">
+
+                    <select id="category">
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="Food">
+                            Food
+                        </option>
+
+                        <option value="Beverages">
+                            Beverages
+                        </option>
+
+                        <option value="Snacks">
+                            Snacks
+                        </option>
+
+                        <option value="Household">
+                            Household
+                        </option>
+
+                        <option value="Personal Care">
+                            Personal Care
+                        </option>
+
+                        <option value="School Supplies">
+                            School Supplies
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div
+                class="form-group"
+                id="priceGroup"
+            >
+
+                <label
+                    class="field-label"
+                    for="price"
+                >
+                    Selling Price
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-prefix">
+                        ₱
+                    </span>
+
+                    <input
+                        type="number"
+                        id="price"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+                <span class="error-message">
+                    Please enter a valid price.
+                </span>
+
+            </div>
+
+
+            <!-- STOCK -->
+
+            <div class="form-row">
+
+                <div
+                    class="form-group"
+                    id="stockGroup"
+                >
+
+                    <label
+                        class="field-label"
+                        for="stock"
+                    >
+                        Stock
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="number"
+                            id="stock"
+                            placeholder="0"
+                            min="0"
+                            step="1"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+                    <span class="error-message">
+                        Required.
+                    </span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label
+                        class="field-label"
+                        for="minStock"
+                    >
+                        Min. Stock
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="number"
+                            id="minStock"
+                            placeholder="5"
+                            min="0"
+                            step="1"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+                    <span class="field-help">
+                        Low-stock alert level
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- UNIT -->
+
+            <div class="form-group">
+
+                <label
+                    class="field-label"
+                    for="unit"
+                >
+                    Unit
+                </label>
+
+                <div class="input-wrap">
+
+                    <select id="unit">
+
+                        <option value="piece">
+                            Piece
+                        </option>
+
+                        <option value="sako">
+                            Sako
+                        </option>
+
+                        <option value="pack">
+                            Pack
+                        </option>
+
+                        <option value="box">
+                            Box
+                        </option>
+
+                        <option value="bottle">
+                            Bottle
+                        </option>
+
+                        <option value="can">
+                            Can
+                        </option>
+
+                        <option value="kg">
+                            Kilogram (kg)
+                        </option>
+
+                        <option value="gram">
+                            Gram (g)
+                        </option>
+
+                        <option value="liter">
+                            Liter (L)
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ICON -->
+
+            <div class="form-group">
+
+                <label
+                    class="field-label icon-label"
+                >
+                    Product Icon
+                </label>
+
+                <div class="icon-grid">
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="📦"
+                    >
+                        📦
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍚"
+                    >
+                        🍚
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🥤"
+                    >
+                        🥤
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍪"
+                    >
+                        🍪
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧴"
+                    >
+                        🧴
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧼"
+                    >
+                        🧼
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="📝"
+                    >
+                        📝
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🛒"
+                    >
+                        🛒
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🥫"
+                    >
+                        🥫
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍞"
+                    >
+                        🍞
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="☕"
+                    >
+                        ☕
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧃"
+                    >
+                        🧃
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    href="products.html"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+
+            <!-- DELETE -->
+
+            <button
+                type="button"
+                class="delete-btn"
+                id="deleteButton"
+            >
+                🗑 Delete Product
+            </button>
+
+        </form>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Changes saved successfully!
+</div>
+
+
+<!-- =========================================================
+     DELETE MODAL
+========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="deleteModal"
+>
+
+    <div class="modal">
+
+        <h3>
+            Delete Product?
+        </h3>
+
+        <p>
+            This product will be permanently removed
+            from your inventory. This action cannot be undone.
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="modal-button modal-cancel"
+                id="cancelDelete"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="modal-button modal-delete"
+                id="confirmDelete"
+            >
+                Delete
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+/* =========================================================
+   VENDORA EDIT PRODUCT
+========================================================= */
+
+const PRODUCTS_KEY =
+    "vendora_products_v1";
+
+const THEME_KEY =
+    "vendora_theme_v1";
+
+const EDIT_ID_KEY =
+    "vendora_edit_product_id";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const form =
+    document.getElementById(
+        "productForm"
+    );
+
+const productName =
+    document.getElementById(
+        "productName"
+    );
+
+const category =
+    document.getElementById(
+        "category"
+    );
+
+const price =
+    document.getElementById(
+        "price"
+    );
+
+const stock =
+    document.getElementById(
+        "stock"
+    );
+
+const minStock =
+    document.getElementById(
+        "minStock"
+    );
+
+const unit =
+    document.getElementById(
+        "unit"
+    );
+
+const productId =
+    document.getElementById(
+        "productId"
+    );
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+const deleteButton =
+    document.getElementById(
+        "deleteButton"
+    );
+
+const deleteModal =
+    document.getElementById(
+        "deleteModal"
+    );
+
+const cancelDelete =
+    document.getElementById(
+        "cancelDelete"
+    );
+
+const confirmDelete =
+    document.getElementById(
+        "confirmDelete"
+    );
+
+const toast =
+    document.getElementById(
+        "toast"
+    );
+
+
+let selectedIcon = "📦";
+let currentProductId = null;
+
+
+/* =========================================================
+   GET PRODUCTS
+========================================================= */
+
+function getProducts() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                PRODUCTS_KEY
+            );
+
+        if (!saved) {
+            return [];
+        }
+
+        const products =
+            JSON.parse(saved);
+
+        return Array.isArray(products)
+            ? products
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Unable to read products:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+/* =========================================================
+   SAVE PRODUCTS
+========================================================= */
+
+function saveProducts(products) {
+
+    localStorage.setItem(
+        PRODUCTS_KEY,
+        JSON.stringify(products)
+    );
+}
+
+
+/* =========================================================
+   GET PRODUCT ID
+========================================================= */
+
+function getProductId(
+    product,
+    index
+) {
+
+    return String(
+        product.id ??
+        product.productId ??
+        product._id ??
+        index
+    );
+}
+
+
+/* =========================================================
+   FIND PRODUCT
+========================================================= */
+
+function findProduct() {
+
+    const editId =
+        localStorage.getItem(
+            EDIT_ID_KEY
+        );
+
+    if (!editId) {
+        return null;
+    }
+
+    const products =
+        getProducts();
+
+    const index =
+        products.findIndex(
+            (product, i) =>
+                getProductId(
+                    product,
+                    i
+                ) === String(editId)
+        );
+
+    if (index === -1) {
+        return null;
+    }
+
+    return {
+        product: products[index],
+        index
+    };
+}
+
+
+/* =========================================================
+   LOAD PRODUCT
+========================================================= */
+
+function loadProduct() {
+
+    const result =
+        findProduct();
+
+
+    if (!result) {
+
+        alert(
+            "The product could not be found."
+        );
+
+        window.location.href =
+            "products.html";
+
+        return;
+    }
+
+
+    const product =
+        result.product;
+
+    currentProductId =
+        getProductId(
+            product,
+            result.index
+        );
+
+
+    productId.textContent =
+        `Product ID: ${currentProductId}`;
+
+
+    productName.value =
+        product.name ??
+        product.productName ??
+        "";
+
+
+    category.value =
+        product.category ??
+        "Other";
+
+
+    price.value =
+        product.price ??
+        product.sellingPrice ??
+        product.unitPrice ??
+        "";
+
+
+    stock.value =
+        product.stock ??
+        product.quantity ??
+        product.qty ??
+        0;
+
+
+    minStock.value =
+        product.minStock ??
+        product.minimumStock ??
+        product.lowStock ??
+        5;
+
+
+    unit.value =
+        product.unit ??
+        "piece";
+
+
+    selectedIcon =
+        product.icon ??
+        product.emoji ??
+        "📦";
+
+
+    selectIcon(
+        selectedIcon
+    );
+}
+
+
+/* =========================================================
+   SELECT ICON
+========================================================= */
+
+function selectIcon(icon) {
+
+    document
+        .querySelectorAll(
+            ".icon-option"
+        )
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.icon === icon
+            );
+
+        });
+}
+
+
+/* =========================================================
+   ICON BUTTONS
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".icon-option"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                selectedIcon =
+                    this.dataset.icon;
+
+                selectIcon(
+                    selectedIcon
+                );
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+function setError(
+    groupId,
+    hasError
+) {
+
+    const group =
+        document.getElementById(
+            groupId
+        );
+
+    if (!group) {
+        return;
+    }
+
+    group.classList.toggle(
+        "error",
+        hasError
+    );
+}
+
+
+function validateForm() {
+
+    let valid = true;
+
+
+    const nameValue =
+        productName.value.trim();
+
+
+    if (!nameValue) {
+
+        setError(
+            "nameGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "nameGroup",
+            false
+        );
+    }
+
+
+    const priceValue =
+        Number(price.value);
+
+
+    if (
+        price.value === "" ||
+        !Number.isFinite(priceValue) ||
+        priceValue < 0
+    ) {
+
+        setError(
+            "priceGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "priceGroup",
+            false
+        );
+    }
+
+
+    const stockValue =
+        Number(stock.value);
+
+
+    if (
+        stock.value === "" ||
+        !Number.isFinite(stockValue) ||
+        stockValue < 0
+    ) {
+
+        setError(
+            "stockGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "stockGroup",
+            false
+        );
+    }
+
+
+    return valid;
+}
+
+
+/* =========================================================
+   SAVE CHANGES
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        if (!validateForm()) {
+
+            const firstError =
+                document.querySelector(
+                    ".form-group.error input"
+                );
+
+            if (firstError) {
+                firstError.focus();
+            }
+
+            return;
+        }
+
+
+        if (
+            currentProductId === null
+        ) {
+
+            alert(
+                "No product selected."
+            );
+
+            return;
+        }
+
+
+        const products =
+            getProducts();
+
+
+        const index =
+            products.findIndex(
+                (product, i) =>
+                    getProductId(
+                        product,
+                        i
+                    ) === currentProductId
+            );
+
+
+        if (index === -1) {
+
+            alert(
+                "Product not found."
+            );
+
+            window.location.href =
+                "products.html";
+
+            return;
+        }
+
+
+        const oldProduct =
+            products[index];
+
+
+        const updatedProduct = {
+
+            ...oldProduct,
+
+            name:
+                productName.value.trim(),
+
+            category:
+                category.value.trim() ||
+                "Other",
+
+            price:
+                Number(
+                    Number(price.value)
+                        .toFixed(2)
+                ),
+
+            stock:
+                Number(
+                    stock.value
+                ),
+
+            minStock:
+                Number(
+                    minStock.value || 5
+                ),
+
+            unit:
+                unit.value,
+
+            icon:
+                selectedIcon,
+
+            updatedAt:
+                new Date().toISOString()
+
+        };
+
+
+        products[index] =
+            updatedProduct;
+
+
+        try {
+
+            saveProducts(
+                products
+            );
+
+        } catch (error) {
+
+            alert(
+                "Unable to save changes."
+            );
+
+            console.error(error);
+
+            return;
+        }
+
+
+        showToast(
+            "Changes saved successfully!"
+        );
+
+
+        setTimeout(
+            function() {
+
+                localStorage.removeItem(
+                    EDIT_ID_KEY
+                );
+
+                window.location.href =
+                    "products.html";
+
+            },
+            650
+        );
+
+    }
+);
+
+
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
+
+deleteButton.addEventListener(
+    "click",
+    function() {
+
+        deleteModal.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CANCEL DELETE
+========================================================= */
+
+cancelDelete.addEventListener(
+    "click",
+    function() {
+
+        deleteModal.classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CONFIRM DELETE
+========================================================= */
+
+confirmDelete.addEventListener(
+    "click",
+    function() {
+
+        if (
+            currentProductId === null
+        ) {
+            return;
+        }
+
+
+        const products =
+            getProducts();
+
+
+        const updated =
+            products.filter(
+                (product, i) =>
+                    getProductId(
+                        product,
+                        i
+                    ) !== currentProductId
+            );
+
+
+        saveProducts(
+            updated
+        );
+
+
+        localStorage.removeItem(
+            EDIT_ID_KEY
+        );
+
+
+        deleteModal.classList.remove(
+            "show"
+        );
+
+
+        showToast(
+            "Product deleted."
+        );
+
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "products.html";
+
+            },
+            500
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+deleteModal.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            deleteModal
+        ) {
+
+            deleteModal.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REMOVE VALIDATION ERROR WHILE TYPING
+========================================================= */
+
+productName.addEventListener(
+    "input",
+    function() {
+
+        if (
+            productName.value.trim()
+        ) {
+
+            setError(
+                "nameGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+price.addEventListener(
+    "input",
+    function() {
+
+        if (
+            price.value !== "" &&
+            Number(price.value) >= 0
+        ) {
+
+            setError(
+                "priceGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+stock.addEventListener(
+    "input",
+    function() {
+
+        if (
+            stock.value !== "" &&
+            Number(stock.value) >= 0
+        ) {
+
+            setError(
+                "stockGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        1700
+    );
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function applyTheme() {
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        );
+
+    const isDark =
+        theme === "dark";
+
+
+    document.body.classList.toggle(
+        "dark",
+        isDark
+    );
+
+
+    themeButton.textContent =
+        isDark
+            ? "☀️"
+            : "🌙";
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+        const isDark =
+            document.body.classList.contains(
+                "dark"
+            );
+
+
+        localStorage.setItem(
+            THEME_KEY,
+            isDark
+                ? "light"
+                : "dark"
+        );
+
+
+        applyTheme();
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+applyTheme();
+
+loadProduct();
+
+</script>
+
+</body>
+</html>

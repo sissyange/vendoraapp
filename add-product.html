@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vendora - Add Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: #eceaf2;
+    color: #282438;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow-x: hidden;
+
+    transition: background .25s ease, color .25s ease;
+}
+
+.app {
+    width: 390px;
+    max-width: 100%;
+    min-height: 100vh;
+
+    background: #f8f7fc;
+
+    padding-bottom: 30px;
+
+    transition: background .25s ease;
+}
+
+@media (max-width: 599px) {
+    body {
+        background: #f8f7fc;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 390px;
+    }
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark {
+    background: #111019;
+    color: #f5f2fa;
+}
+
+body.dark .app {
+    background: #15131e;
+}
+
+body.dark .header {
+    background: #15131e;
+    border-color: #2b2737;
+}
+
+body.dark .form-card,
+body.dark .input-wrap,
+body.dark .icon-option,
+body.dark .cancel-btn {
+    background: #211e2b;
+    border-color: #332e40;
+}
+
+body.dark .field-label,
+body.dark .page-title {
+    color: #f5f2fa;
+}
+
+body.dark .field-help,
+body.dark .page-subtitle {
+    color: #aaa4b4;
+}
+
+body.dark input,
+body.dark select {
+    color: #f5f2fa;
+}
+
+body.dark input::placeholder {
+    color: #817b8c;
+}
+
+body.dark .theme-button {
+    background: #29243a;
+    color: #f3ce61;
+}
+
+body.dark .icon-option.active {
+    background: #302651;
+    border-color: #8062ed;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    padding: 17px 18px;
+
+    background: #f8f7fc;
+
+    border-bottom: 1px solid #ebe8f2;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.back-btn {
+    width: 39px;
+    height: 39px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #efebff;
+    color: #6545d8;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+body.dark .back-btn {
+    background: #29243a;
+    color: #a995ff;
+}
+
+.page-title {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: -.4px;
+}
+
+.page-subtitle {
+    margin: 2px 0 0;
+
+    color: #898493;
+
+    font-size: 11px;
+}
+
+.theme-button {
+    width: 39px;
+    height: 39px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #efebff;
+
+    color: #6545d8;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    padding: 18px;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.form-card {
+    background: #fff;
+
+    border: 1px solid #ebe8f2;
+
+    border-radius: 19px;
+
+    padding: 18px;
+
+    transition:
+        background .25s ease,
+        border-color .25s ease;
+}
+
+.form-intro {
+    margin-bottom: 20px;
+}
+
+.form-intro h2 {
+    margin: 0 0 5px;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.form-intro p {
+    margin: 0;
+
+    color: #898493;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.field-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #393444;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.required {
+    color: #d94d58;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrap {
+    display: flex;
+    align-items: center;
+
+    min-height: 46px;
+
+    background: #faf9fc;
+
+    border: 1px solid #e5e1ec;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.input-wrap:focus-within {
+    border-color: #8061eb;
+    box-shadow: 0 0 0 3px rgba(108, 76, 232, .08);
+}
+
+.input-prefix {
+    padding-left: 13px;
+
+    color: #8d8798;
+
+    font-size: 13px;
+}
+
+.input-wrap input,
+.input-wrap select {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 0 13px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #282438;
+
+    font-family: inherit;
+
+    font-size: 13px;
+}
+
+.input-wrap input:focus,
+.input-wrap select:focus {
+    outline: none;
+}
+
+.input-wrap:has(.input-prefix) input {
+    padding-left: 7px;
+}
+
+.input-wrap select {
+    cursor: pointer;
+}
+
+.field-help {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #97919f;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   TWO COLUMNS
+========================================================= */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+}
+
+/* =========================================================
+   PRODUCT ICON
+========================================================= */
+
+.icon-label {
+    margin-bottom: 9px;
+}
+
+.icon-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 7px;
+}
+
+.icon-option {
+    width: 100%;
+    aspect-ratio: 1;
+
+    border: 1px solid #e6e2ee;
+
+    border-radius: 11px;
+
+    background: #faf9fc;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+
+    transition: .18s ease;
+}
+
+.icon-option:hover {
+    transform: translateY(-1px);
+}
+
+.icon-option.active {
+    background: #f0ebff;
+
+    border-color: #7252e4;
+
+    box-shadow:
+        0 0 0 2px rgba(108, 76, 232, .08);
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1.25fr;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.cancel-btn,
+.save-btn {
+    min-height: 47px;
+
+    border-radius: 13px;
+
+    border: 0;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: .18s ease;
+}
+
+.cancel-btn {
+    background: #efedf3;
+    color: #666171;
+}
+
+.cancel-btn:hover {
+    background: #e6e3eb;
+}
+
+.save-btn {
+    background: #6c4ce8;
+    color: #fff;
+
+    box-shadow:
+        0 8px 18px rgba(108, 76, 232, .18);
+}
+
+.save-btn:hover {
+    background: #5d3fd0;
+}
+
+.save-btn:active,
+.cancel-btn:active {
+    transform: scale(.985);
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-message {
+    display: none;
+
+    margin-top: 7px;
+
+    color: #d94d58;
+
+    font-size: 10px;
+}
+
+.form-group.error .input-wrap {
+    border-color: #d94d58;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+/* =========================================================
+   SUCCESS TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 24px;
+
+    width: 350px;
+    max-width: calc(100% - 30px);
+
+    transform:
+        translate(-50%, 100px);
+
+    background: #282438;
+    color: #fff;
+
+    padding: 13px 15px;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-align: center;
+
+    opacity: 0;
+
+    z-index: 100;
+
+    transition:
+        transform .25s ease,
+        opacity .25s ease;
+}
+
+.toast.show {
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+}
+
+/* =========================================================
+   SMALL SCREENS
+========================================================= */
+
+@media (max-width: 350px) {
+
+    .main {
+        padding: 14px;
+    }
+
+    .header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .icon-grid {
+        grid-template-columns:
+            repeat(5, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="header-row">
+
+            <div class="header-left">
+
+                <a
+                    href="products.html"
+                    class="back-btn"
+                    aria-label="Back"
+                >
+                    ←
+                </a>
+
+                <div>
+
+                    <h1 class="page-title">
+                        Add Product
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Add a new item to your inventory
+                    </p>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="theme-button"
+                id="themeButton"
+                aria-label="Toggle dark mode"
+            >
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+        <form
+            id="productForm"
+            class="form-card"
+            novalidate
+        >
+
+            <div class="form-intro">
+
+                <h2>
+                    Product Information
+                </h2>
+
+                <p>
+                    Enter the details of the product you want
+                    to add to your store inventory.
+                </p>
+
+            </div>
+
+
+            <!-- PRODUCT NAME -->
+
+            <div
+                class="form-group"
+                id="nameGroup"
+            >
+
+                <label
+                    class="field-label"
+                    for="productName"
+                >
+                    Product Name
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrap">
+
+                    <input
+                        type="text"
+                        id="productName"
+                        name="productName"
+                        placeholder="e.g. Rice"
+                        maxlength="80"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <span class="error-message">
+                    Please enter a product name.
+                </span>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div
+                class="form-group"
+                id="categoryGroup"
+            >
+
+                <label
+                    class="field-label"
+                    for="category"
+                >
+                    Category
+                </label>
+
+                <div class="input-wrap">
+
+                    <select
+                        id="category"
+                        name="category"
+                    >
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="Food">
+                            Food
+                        </option>
+
+                        <option value="Beverages">
+                            Beverages
+                        </option>
+
+                        <option value="Snacks">
+                            Snacks
+                        </option>
+
+                        <option value="Household">
+                            Household
+                        </option>
+
+                        <option value="Personal Care">
+                            Personal Care
+                        </option>
+
+                        <option value="School Supplies">
+                            School Supplies
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div
+                class="form-group"
+                id="priceGroup"
+            >
+
+                <label
+                    class="field-label"
+                    for="price"
+                >
+                    Selling Price
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrap">
+
+                    <span class="input-prefix">
+                        ₱
+                    </span>
+
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                    >
+
+                </div>
+
+                <span class="error-message">
+                    Please enter a valid price.
+                </span>
+
+            </div>
+
+
+            <!-- STOCK + MIN STOCK -->
+
+            <div class="form-row">
+
+                <div
+                    class="form-group"
+                    id="stockGroup"
+                >
+
+                    <label
+                        class="field-label"
+                        for="stock"
+                    >
+                        Stock
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            placeholder="0"
+                            min="0"
+                            step="1"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+                    <span class="error-message">
+                        Required.
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="form-group"
+                    id="minStockGroup"
+                >
+
+                    <label
+                        class="field-label"
+                        for="minStock"
+                    >
+                        Min. Stock
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <input
+                            type="number"
+                            id="minStock"
+                            name="minStock"
+                            placeholder="5"
+                            value="5"
+                            min="0"
+                            step="1"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+                    <span class="field-help">
+                        Low-stock alert level
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- UNIT -->
+
+            <div class="form-group">
+
+                <label
+                    class="field-label"
+                    for="unit"
+                >
+                    Unit
+                </label>
+
+                <div class="input-wrap">
+
+                    <select
+                        id="unit"
+                        name="unit"
+                    >
+
+                        <option value="piece">
+                            Piece
+                        </option>
+
+                        <option value="sako">
+                            Sako
+                        </option>
+
+                        <option value="pack">
+                            Pack
+                        </option>
+
+                        <option value="box">
+                            Box
+                        </option>
+
+                        <option value="bottle">
+                            Bottle
+                        </option>
+
+                        <option value="can">
+                            Can
+                        </option>
+
+                        <option value="kg">
+                            Kilogram (kg)
+                        </option>
+
+                        <option value="gram">
+                            Gram (g)
+                        </option>
+
+                        <option value="liter">
+                            Liter (L)
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ICON -->
+
+            <div class="form-group">
+
+                <label
+                    class="field-label icon-label"
+                >
+                    Product Icon
+                </label>
+
+                <div class="icon-grid">
+
+                    <button
+                        type="button"
+                        class="icon-option active"
+                        data-icon="📦"
+                    >
+                        📦
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍚"
+                    >
+                        🍚
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🥤"
+                    >
+                        🥤
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍪"
+                    >
+                        🍪
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧴"
+                    >
+                        🧴
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧼"
+                    >
+                        🧼
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="📝"
+                    >
+                        📝
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🛒"
+                    >
+                        🛒
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🥫"
+                    >
+                        🥫
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🍞"
+                    >
+                        🍞
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="☕"
+                    >
+                        ☕
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="🧃"
+                    >
+                        🧃
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    href="products.html"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Save Product
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Product saved successfully!
+</div>
+
+
+<script>
+/* =========================================================
+   VENDORA ADD PRODUCT
+========================================================= */
+
+const PRODUCTS_KEY =
+    "vendora_products_v1";
+
+const THEME_KEY =
+    "vendora_theme_v1";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const form =
+    document.getElementById(
+        "productForm"
+    );
+
+const productName =
+    document.getElementById(
+        "productName"
+    );
+
+const category =
+    document.getElementById(
+        "category"
+    );
+
+const price =
+    document.getElementById(
+        "price"
+    );
+
+const stock =
+    document.getElementById(
+        "stock"
+    );
+
+const minStock =
+    document.getElementById(
+        "minStock"
+    );
+
+const unit =
+    document.getElementById(
+        "unit"
+    );
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+const toast =
+    document.getElementById(
+        "toast"
+    );
+
+
+let selectedIcon = "📦";
+
+
+/* =========================================================
+   GET PRODUCTS
+========================================================= */
+
+function getProducts() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                PRODUCTS_KEY
+            );
+
+        if (!saved) {
+            return [];
+        }
+
+        const products =
+            JSON.parse(saved);
+
+        return Array.isArray(products)
+            ? products
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Unable to read products:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+/* =========================================================
+   SAVE PRODUCTS
+========================================================= */
+
+function saveProducts(products) {
+
+    localStorage.setItem(
+        PRODUCTS_KEY,
+        JSON.stringify(products)
+    );
+}
+
+
+/* =========================================================
+   GENERATE PRODUCT ID
+========================================================= */
+
+function generateProductId() {
+
+    const products =
+        getProducts();
+
+    const numbers =
+        products
+            .map(product => {
+                const value =
+                    String(
+                        product.id ?? ""
+                    );
+
+                const match =
+                    value.match(
+                        /^P-(\d+)$/
+                    );
+
+                return match
+                    ? Number(match[1])
+                    : 0;
+            });
+
+    const highest =
+        numbers.length
+            ? Math.max(...numbers)
+            : 0;
+
+    return `P-${String(
+        highest + 1
+    ).padStart(4, "0")}`;
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+function setError(
+    groupId,
+    hasError
+) {
+
+    const group =
+        document.getElementById(
+            groupId
+        );
+
+    if (!group) {
+        return;
+    }
+
+    group.classList.toggle(
+        "error",
+        hasError
+    );
+}
+
+
+function validateForm() {
+
+    let valid = true;
+
+
+    /* NAME */
+
+    const nameValue =
+        productName.value.trim();
+
+    if (!nameValue) {
+
+        setError(
+            "nameGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "nameGroup",
+            false
+        );
+    }
+
+
+    /* PRICE */
+
+    const priceValue =
+        Number(price.value);
+
+    if (
+        price.value === "" ||
+        !Number.isFinite(priceValue) ||
+        priceValue < 0
+    ) {
+
+        setError(
+            "priceGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "priceGroup",
+            false
+        );
+    }
+
+
+    /* STOCK */
+
+    const stockValue =
+        Number(stock.value);
+
+    if (
+        stock.value === "" ||
+        !Number.isFinite(stockValue) ||
+        stockValue < 0
+    ) {
+
+        setError(
+            "stockGroup",
+            true
+        );
+
+        valid = false;
+
+    } else {
+
+        setError(
+            "stockGroup",
+            false
+        );
+    }
+
+
+    return valid;
+}
+
+
+/* =========================================================
+   ICON SELECTION
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".icon-option"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .querySelectorAll(
+                        ".icon-option"
+                    )
+                    .forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+                this.classList.add(
+                    "active"
+                );
+
+                selectedIcon =
+                    this.dataset.icon;
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   FORM SUBMIT
+========================================================= */
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        if (!validateForm()) {
+
+            const firstError =
+                document.querySelector(
+                    ".form-group.error input"
+                );
+
+            if (firstError) {
+                firstError.focus();
+            }
+
+            return;
+        }
+
+
+        const products =
+            getProducts();
+
+
+        const newProduct = {
+
+            id:
+                generateProductId(),
+
+            name:
+                productName.value.trim(),
+
+            category:
+                category.value.trim() ||
+                "Other",
+
+            price:
+                Number(
+                    Number(price.value)
+                        .toFixed(2)
+                ),
+
+            stock:
+                Number(
+                    stock.value
+                ),
+
+            minStock:
+                Number(
+                    minStock.value || 5
+                ),
+
+            unit:
+                unit.value,
+
+            icon:
+                selectedIcon,
+
+            createdAt:
+                new Date().toISOString(),
+
+            updatedAt:
+                new Date().toISOString()
+
+        };
+
+
+        products.push(
+            newProduct
+        );
+
+
+        try {
+
+            saveProducts(
+                products
+            );
+
+        } catch (error) {
+
+            alert(
+                "Unable to save the product. Please try again."
+            );
+
+            console.error(error);
+
+            return;
+        }
+
+
+        showToast(
+            "Product saved successfully!"
+        );
+
+
+        /*
+           Return to products page
+           after a short delay.
+        */
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "products.html";
+
+            },
+            650
+        );
+
+    }
+);
+
+
+/* =========================================================
+   REMOVE ERRORS WHILE TYPING
+========================================================= */
+
+productName.addEventListener(
+    "input",
+    function() {
+
+        if (
+            productName.value.trim()
+        ) {
+
+            setError(
+                "nameGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+price.addEventListener(
+    "input",
+    function() {
+
+        if (
+            price.value !== "" &&
+            Number(price.value) >= 0
+        ) {
+
+            setError(
+                "priceGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+stock.addEventListener(
+    "input",
+    function() {
+
+        if (
+            stock.value !== "" &&
+            Number(stock.value) >= 0
+        ) {
+
+            setError(
+                "stockGroup",
+                false
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        1800
+    );
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function applyTheme() {
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        );
+
+    const isDark =
+        theme === "dark";
+
+    document.body.classList.toggle(
+        "dark",
+        isDark
+    );
+
+    themeButton.textContent =
+        isDark
+            ? "☀️"
+            : "🌙";
+}
+
+
+themeButton.addEventListener(
+    "click",
+    function() {
+
+        const isDark =
+            document.body.classList.contains(
+                "dark"
+            );
+
+        localStorage.setItem(
+            THEME_KEY,
+            isDark
+                ? "light"
+                : "dark"
+        );
+
+        applyTheme();
+    }
+);
+
+
+/* =========================================================
+   STORAGE SYNC
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key === THEME_KEY
+        ) {
+            applyTheme();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+applyTheme();
+
+</script>
+
+</body>
+</html>

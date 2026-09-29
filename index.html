@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6c4ce8">
+
+    <title>Vendora — Welcome</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        :root {
+            --primary: #6c4ce8;
+            --primary-dark: #5839d0;
+            --purple-soft: #eee9ff;
+
+            --yellow: #f5c542;
+            --peach: #f7b58a;
+            --green: #39aa76;
+            --blue: #5b8fe8;
+
+            --background: #eceaf2;
+            --app-bg: #f8f7fc;
+            --card: #ffffff;
+
+            --text: #242132;
+            --muted: #777385;
+            --light-text: #9994a5;
+
+            --border: #ebe8f3;
+
+            --shadow:
+                0 8px 22px rgba(72, 55, 135, 0.08);
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(108, 76, 232, 0.08),
+                    transparent 28%
+                ),
+                var(--background);
+
+            color: var(--text);
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            overflow-x: hidden;
+        }
+
+        /* =====================================================
+           APP CONTAINER
+        ===================================================== */
+
+        .app-container {
+            position: relative;
+
+            width: 390px;
+            max-width: 100%;
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #faf9fd 0%,
+                    #f6f4fb 100%
+                );
+
+            display: flex;
+            flex-direction: column;
+
+            padding:
+                22px
+                18px
+                22px;
+
+            overflow: hidden;
+        }
+
+        /* Decorative background shapes */
+
+        .bg-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape-one {
+            width: 150px;
+            height: 150px;
+
+            top: -75px;
+            right: -55px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(108, 76, 232, 0.07);
+        }
+
+        .shape-two {
+            width: 120px;
+            height: 120px;
+
+            left: -70px;
+            bottom: 130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(245, 197, 66, 0.08);
+        }
+
+        .shape-three {
+            width: 75px;
+            height: 75px;
+
+            right: -25px;
+            bottom: 210px;
+
+            border-radius: 24px;
+
+            transform: rotate(25deg);
+
+            background:
+                rgba(247, 181, 138, 0.08);
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 38px;
+        }
+
+        .logo {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #7659ed,
+                    #6041d9
+                );
+
+            color: #fff;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 18px
+                rgba(108, 76, 232, 0.23);
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            color: var(--muted);
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            text-align: center;
+
+            padding:
+                5px
+                4px
+                0;
+        }
+
+        .hero-icon-wrapper {
+            position: relative;
+
+            width: 108px;
+            height: 108px;
+
+            margin:
+                0
+                auto
+                22px;
+        }
+
+        .hero-icon {
+            width: 100%;
+            height: 100%;
+
+            border-radius: 32px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #eee9ff,
+                    #ddd5ff
+                );
+
+            border:
+                1px solid
+                rgba(108, 76, 232, 0.08);
+
+            display: grid;
+            place-items: center;
+
+            font-size: 49px;
+
+            box-shadow:
+                0 12px 28px
+                rgba(108, 76, 232, 0.10);
+        }
+
+        .hero-dot {
+            position: absolute;
+
+            width: 17px;
+            height: 17px;
+
+            border-radius: 50%;
+
+            background: var(--yellow);
+
+            right: -5px;
+            top: 8px;
+
+            border: 4px solid #f8f7fc;
+        }
+
+        .hero h1 {
+            margin:
+                0
+                0
+                10px;
+
+            font-size: 28px;
+
+            line-height: 1.15;
+
+            letter-spacing: -0.8px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            margin:
+                0
+                auto;
+
+            max-width: 315px;
+
+            color: var(--muted);
+
+            line-height: 1.55;
+
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           FEATURES
+        ===================================================== */
+
+        .features {
+            margin-top: 30px;
+
+            display: grid;
+
+            gap: 9px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px;
+
+            background:
+                rgba(255, 255, 255, 0.96);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(72, 55, 135, 0.045);
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .feature:active {
+            transform: scale(0.985);
+        }
+
+        .feature-icon {
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            border-radius: 12px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 19px;
+        }
+
+        .feature:nth-child(1) .feature-icon {
+            background: #eee9ff;
+        }
+
+        .feature:nth-child(2) .feature-icon {
+            background: #fff4d9;
+        }
+
+        .feature:nth-child(3) .feature-icon {
+            background: #e8f6ef;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature strong {
+            display: block;
+
+            font-size: 12px;
+
+            margin-bottom: 3px;
+
+            font-weight: 750;
+        }
+
+        .feature span {
+            display: block;
+
+            color: #85808f;
+
+            font-size: 10px;
+
+            line-height: 1.4;
+        }
+
+        .feature-arrow {
+            color: #b0abba;
+
+            font-size: 16px;
+
+            padding-right: 2px;
+        }
+
+        /* =====================================================
+           GET STARTED
+        ===================================================== */
+
+        .get-started {
+            position: relative;
+
+            display: block;
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px 16px;
+
+            border: 0;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7254eb,
+                    #6242d9
+                );
+
+            color: #fff;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 10px 22px
+                rgba(108, 76, 232, 0.22);
+
+            transition:
+                transform 0.15s ease,
+                background 0.15s ease;
+        }
+
+        .get-started:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #6647df,
+                    #5738ca
+                );
+        }
+
+        .get-started:active {
+            transform: scale(0.98);
+        }
+
+        .button-content {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+        }
+
+        .button-arrow {
+            font-size: 15px;
+
+            transition:
+                transform 0.15s ease;
+        }
+
+        .get-started:hover .button-arrow {
+            transform: translateX(3px);
+        }
+
+        /* =====================================================
+           OFFLINE NOTE
+        ===================================================== */
+
+        .offline-note {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            margin-top: 13px;
+
+            color: #8f899d;
+
+            font-size: 9px;
+        }
+
+        .offline-check {
+            width: 14px;
+            height: 14px;
+
+            border-radius: 50%;
+
+            background: #e5f6ed;
+
+            color: var(--green);
+
+            display: grid;
+            place-items: center;
+
+            font-size: 8px;
+
+            font-weight: 800;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            margin-top: auto;
+
+            padding-top: 28px;
+
+            text-align: center;
+
+            color: #aaa6b2;
+
+            font-size: 9px;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 599px) {
+
+            body {
+                background: #f8f7fc;
+            }
+
+            .app-container {
+                width: 100%;
+                max-width: 390px;
+            }
+        }
+
+        /* =====================================================
+           VERY SMALL DEVICES
+        ===================================================== */
+
+        @media (max-width: 340px) {
+
+            .app-container {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+            .hero p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="app-container">
+
+    <!-- Decorative background -->
+    <div class="bg-shape shape-one"></div>
+    <div class="bg-shape shape-two"></div>
+    <div class="bg-shape shape-three"></div>
+
+
+    <div class="content-layer">
+
+        <!-- BRAND -->
+        <div class="brand">
+
+            <div class="logo">
+                V
+            </div>
+
+            <div class="brand-info">
+
+                <div class="brand-name">
+                    Vendora
+                </div>
+
+                <div class="brand-subtitle">
+                    Store Management
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-icon-wrapper">
+
+                <div class="hero-icon">
+                    🛍️
+                </div>
+
+                <div class="hero-dot"></div>
+
+            </div>
+
+
+            <h1>
+                Welcome to
+                <span>Vendora!</span>
+            </h1>
+
+
+            <p>
+                A simple and convenient way to manage
+                your products, inventory, sales, and
+                store records.
+            </p>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="features">
+
+            <!-- PRODUCT -->
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📦
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Manage Products
+                    </strong>
+
+                    <span>
+                        Add and organize your store inventory.
+                    </span>
+
+                </div>
+
+                <div class="feature-arrow">
+                    ›
+                </div>
+
+            </div>
+
+
+            <!-- SALES -->
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💰
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        Track Sales
+                    </strong>
+
+                    <span>
+                        Record transactions and monitor your sales.
+                    </span>
+
+                </div>
+
+                <div class="feature-arrow">
+                    ›
+                </div>
+
+            </div>
+
+
+            <!-- REPORTS -->
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <div class="feature-text">
+
+                    <strong>
+                        View Reports
+                    </strong>
+
+                    <span>
+                        Keep track of your store performance.
+                    </span>
+
+                </div>
+
+                <div class="feature-arrow">
+                    ›
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- GET STARTED -->
+        <a
+            class="get-started"
+            href="home.html"
+        >
+
+            <span class="button-content">
+
+                <span>
+                    Get Started
+                </span>
+
+                <span class="button-arrow">
+                    →
+                </span>
+
+            </span>
+
+        </a>
+
+
+        <!-- OFFLINE -->
+        <div class="offline-note">
+
+            <span class="offline-check">
+                ✓
+            </span>
+
+            <span>
+                Designed to work offline
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="footer">
+        Vendora Store Management
+    </div>
+
+</main>
+
+</body>
+</html>

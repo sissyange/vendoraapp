@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendora — Sales History</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#6750d8;
+    --primary-dark:#5140bd;
+    --accent:#f5c542;
+    --bg:#eceaf2;
+    --surface:#ffffff;
+    --surface-2:#f7f6fb;
+    --text:#252332;
+    --muted:#777487;
+    --border:#e8e5ef;
+    --danger:#e04d5d;
+    --success:#22a06b;
+    --shadow:0 8px 24px rgba(45,36,90,.08);
+}
+
+body.dark{
+    --bg:#15141c;
+    --surface:#211f2b;
+    --surface-2:#2a2835;
+    --text:#f5f3fb;
+    --muted:#aaa6b8;
+    --border:#393646;
+    --shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.app{
+    width:390px;
+    max-width:100%;
+    min-height:100vh;
+    margin:0 auto;
+    background:var(--bg);
+    position:relative;
+    padding-bottom:85px;
+}
+
+/* HEADER */
+.header{
+    padding:20px 18px 12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.back-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:12px;
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    font-size:20px;
+}
+
+.header-text h1{
+    font-size:21px;
+    line-height:1.2;
+}
+
+.header-text p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.theme-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:12px;
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    font-size:17px;
+}
+
+/* CONTENT */
+.content{
+    padding:8px 16px 20px;
+}
+
+/* SUMMARY */
+.summary-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.summary-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    box-shadow:var(--shadow);
+}
+
+.summary-icon{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    background:#eeeafd;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:9px;
+    font-size:17px;
+}
+
+body.dark .summary-icon{
+    background:#302b50;
+}
+
+.summary-label{
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:4px;
+}
+
+.summary-value{
+    font-size:19px;
+    font-weight:800;
+}
+
+/* FILTER CARD */
+.filter-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:14px;
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+}
+
+.search-box{
+    position:relative;
+    margin-bottom:11px;
+}
+
+.search-box span{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+    font-size:15px;
+}
+
+.search-box input{
+    width:100%;
+    height:43px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--surface-2);
+    color:var(--text);
+    outline:none;
+    padding:0 12px 0 38px;
+    font-size:13px;
+}
+
+.search-box input:focus{
+    border-color:var(--primary);
+}
+
+.filter-row{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.filter-row::-webkit-scrollbar{
+    display:none;
+}
+
+.filter-btn{
+    flex:0 0 auto;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:10px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.filter-btn.active{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+}
+
+/* SECTION TITLE */
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:4px 2px 10px;
+}
+
+.section-title h2{
+    font-size:15px;
+}
+
+.section-title span{
+    font-size:11px;
+    color:var(--muted);
+}
+
+/* EMPTY */
+.empty{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:34px 20px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.empty-icon{
+    width:60px;
+    height:60px;
+    margin:0 auto 12px;
+    border-radius:18px;
+    background:#eeeafd;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+}
+
+body.dark .empty-icon{
+    background:#302b50;
+}
+
+.empty h3{
+    font-size:16px;
+    margin-bottom:6px;
+}
+
+.empty p{
+    font-size:12px;
+    line-height:1.5;
+    color:var(--muted);
+}
+
+/* SALES LIST */
+.sales-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.sale-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:13px;
+    box-shadow:var(--shadow);
+}
+
+.sale-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.sale-icon{
+    width:43px;
+    height:43px;
+    flex:0 0 43px;
+    border-radius:13px;
+    background:#f1effc;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+body.dark .sale-icon{
+    background:#302d3d;
+}
+
+.sale-info{
+    min-width:0;
+    flex:1;
+}
+
+.sale-name{
+    font-size:14px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.sale-meta{
+    margin-top:4px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.sale-meta span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.payment{
+    padding:3px 7px;
+    border-radius:7px;
+    background:#edf8f3;
+    color:var(--success) !important;
+    font-weight:700;
+}
+
+body.dark .payment{
+    background:#17382c;
+}
+
+.sale-total{
+    text-align:right;
+}
+
+.sale-total-label{
+    font-size:9px;
+    color:var(--muted);
+}
+
+.sale-total-value{
+    font-size:15px;
+    font-weight:800;
+    color:var(--primary);
+    margin-top:2px;
+}
+
+.sale-bottom{
+    border-top:1px solid var(--border);
+    margin-top:11px;
+    padding-top:9px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.sale-details{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.sale-details span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.note{
+    color:var(--text) !important;
+    max-width:190px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.delete-btn{
+    border:none;
+    background:#fff0f2;
+    color:var(--danger);
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+body.dark .delete-btn{
+    background:#3c2429;
+}
+
+/* NAVIGATION */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:390px;
+    max-width:100%;
+    height:70px;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    z-index:20;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    min-width:52px;
+}
+
+.nav-item span:first-child{
+    font-size:18px;
+}
+
+.nav-item span:last-child{
+    font-size:9px;
+}
+
+.nav-item.active{
+    color:var(--primary);
+    font-weight:700;
+}
+
+/* MODAL */
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal-backdrop.show{
+    display:flex;
+}
+
+.modal{
+    width:390px;
+    max-width:100%;
+    background:var(--surface);
+    border-radius:22px 22px 0 0;
+    padding:22px 18px 24px;
+}
+
+.modal-icon{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    background:#fff0f2;
+    color:var(--danger);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+body.dark .modal-icon{
+    background:#3c2429;
+}
+
+.modal h3{
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+.modal p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:18px;
+}
+
+.modal-btn{
+    height:44px;
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:var(--surface-2);
+    color:var(--text);
+}
+
+.confirm-btn{
+    background:var(--danger);
+    color:white;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:84px;
+    transform:translate(-50%,20px);
+    background:#262331;
+    color:white;
+    padding:11px 15px;
+    border-radius:11px;
+    font-size:11px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s ease;
+    z-index:200;
+    max-width:350px;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* DESKTOP */
+@media(min-width:391px){
+    .app{
+        box-shadow:none;
+    }
+
+    .bottom-nav{
+        left:50%;
+        transform:translateX(-50%);
+    }
+}
+
+/* MOBILE */
+@media(max-width:390px){
+    body{
+        background:var(--bg);
+    }
+
+    .app{
+        width:100%;
+    }
+
+    .bottom-nav{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="header-left">
+
+            <button class="back-btn" onclick="location.href='sales.html'">
+                ←
+            </button>
+
+            <div class="header-text">
+                <h1>Sales History</h1>
+                <p>Track your store transactions</p>
+            </div>
+
+        </div>
+
+        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+            ☾
+        </button>
+
+    </header>
+
+
+    <main class="content">
+
+        <!-- SUMMARY -->
+        <section class="summary-grid">
+
+            <div class="summary-card">
+                <div class="summary-icon">₱</div>
+                <div class="summary-label">Total Sales</div>
+                <div class="summary-value" id="totalSales">₱0.00</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon">🧾</div>
+                <div class="summary-label">Transactions</div>
+                <div class="summary-value" id="transactionCount">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon">📦</div>
+                <div class="summary-label">Items Sold</div>
+                <div class="summary-value" id="itemsSold">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon">📊</div>
+                <div class="summary-label">Average Sale</div>
+                <div class="summary-value" id="averageSale">₱0.00</div>
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH + FILTER -->
+        <section class="filter-card">
+
+            <div class="search-box">
+                <span>🔎</span>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search product or transaction..."
+                    autocomplete="off"
+                >
+            </div>
+
+            <div class="filter-row">
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all"
+                    onclick="setFilter('all', this)"
+                >
+                    All Time
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="today"
+                    onclick="setFilter('today', this)"
+                >
+                    Today
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="week"
+                    onclick="setFilter('week', this)"
+                >
+                    This Week
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="month"
+                    onclick="setFilter('month', this)"
+                >
+                    This Month
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SALES -->
+        <div class="section-title">
+            <h2>Transactions</h2>
+            <span id="resultCount">0 records</span>
+        </div>
+
+        <div id="salesList" class="sales-list"></div>
+
+    </main>
+
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+
+        <a class="nav-item" href="home.html">
+            <span>⌂</span>
+            <span>Home</span>
+        </a>
+
+        <a class="nav-item" href="products.html">
+            <span>▦</span>
+            <span>Products</span>
+        </a>
+
+        <a class="nav-item active" href="sales.html">
+            <span>₱</span>
+            <span>Sales</span>
+        </a>
+
+        <a class="nav-item" href="reports.html">
+            <span>▥</span>
+            <span>Reports</span>
+        </a>
+
+        <a class="nav-item" href="settings.html">
+            <span>⚙</span>
+            <span>More</span>
+        </a>
+
+    </nav>
+
+</div>
+
+
+<!-- DELETE MODAL -->
+<div class="modal-backdrop" id="deleteModal">
+
+    <div class="modal">
+
+        <div class="modal-icon">
+            🗑
+        </div>
+
+        <h3>Delete Transaction?</h3>
+
+        <p id="deleteMessage">
+            This transaction will be removed from your sales history.
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                class="modal-btn cancel-btn"
+                onclick="closeDeleteModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="modal-btn confirm-btn"
+                onclick="confirmDelete()"
+            >
+                Delete
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PRODUCTS_KEY = "vendora_products_v1";
+const SALES_KEY = "vendora_sales_v1";
+const THEME_KEY = "vendora_theme_v1";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let sales = [];
+let products = [];
+
+let activeFilter = "all";
+let searchText = "";
+
+let saleToDelete = null;
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+function loadData(){
+
+    try{
+        products = JSON.parse(
+            localStorage.getItem(PRODUCTS_KEY) || "[]"
+        );
+    }catch(error){
+        products = [];
+    }
+
+    try{
+        sales = JSON.parse(
+            localStorage.getItem(SALES_KEY) || "[]"
+        );
+    }catch(error){
+        sales = [];
+    }
+
+    if(!Array.isArray(products)){
+        products = [];
+    }
+
+    if(!Array.isArray(sales)){
+        sales = [];
+    }
+
+    render();
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveProducts(){
+
+    localStorage.setItem(
+        PRODUCTS_KEY,
+        JSON.stringify(products)
+    );
+
+}
+
+
+function saveSales(){
+
+    localStorage.setItem(
+        SALES_KEY,
+        JSON.stringify(sales)
+    );
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+    const theme =
+        localStorage.getItem(THEME_KEY) || "light";
+
+    if(theme === "dark"){
+
+        document.body.classList.add("dark");
+
+        document.getElementById("themeBtn").textContent = "☀";
+
+    }else{
+
+        document.body.classList.remove("dark");
+
+        document.getElementById("themeBtn").textContent = "☾";
+
+    }
+
+}
+
+
+function toggleTheme(){
+
+    const isDark =
+        document.body.classList.contains("dark");
+
+    const newTheme =
+        isDark ? "light" : "dark";
+
+    localStorage.setItem(
+        THEME_KEY,
+        newTheme
+    );
+
+    applyTheme();
+
+}
+
+
+/* =========================================================
+   CURRENCY
+========================================================= */
+
+function peso(value){
+
+    const number =
+        Number(value) || 0;
+
+    return new Intl.NumberFormat(
+        "en-PH",
+        {
+            style:"currency",
+            currency:"PHP"
+        }
+    ).format(number);
+
+}
+
+
+/* =========================================================
+   DATE HELPERS
+========================================================= */
+
+function getLocalDate(){
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+
+    const month = String(
+        now.getMonth() + 1
+    ).padStart(2,"0");
+
+    const day = String(
+        now.getDate()
+    ).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+function parseSaleDate(sale){
+
+    if(sale.date){
+
+        const dateString =
+            String(sale.date);
+
+        if(/^\d{4}-\d{2}-\d{2}$/.test(dateString)){
+
+            const parts =
+                dateString.split("-").map(Number);
+
+            return new Date(
+                parts[0],
+                parts[1] - 1,
+                parts[2]
+            );
+
+        }
+
+    }
+
+    if(sale.createdAt){
+
+        const date =
+            new Date(sale.createdAt);
+
+        if(!isNaN(date.getTime())){
+            return date;
+        }
+
+    }
+
+    return new Date();
+
+}
+
+
+function formatDate(sale){
+
+    const date =
+        parseSaleDate(sale);
+
+    if(isNaN(date.getTime())){
+        return "Unknown date";
+    }
+
+    return date.toLocaleDateString(
+        "en-PH",
+        {
+            month:"short",
+            day:"numeric",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+function formatTime(sale){
+
+    if(!sale.createdAt){
+        return "";
+    }
+
+    const date =
+        new Date(sale.createdAt);
+
+    if(isNaN(date.getTime())){
+        return "";
+    }
+
+    return date.toLocaleTimeString(
+        "en-PH",
+        {
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DATE FILTER
+========================================================= */
+
+function isToday(sale){
+
+    return String(sale.date || "") === getLocalDate();
+
+}
+
+
+function isThisWeek(sale){
+
+    const saleDate =
+        parseSaleDate(sale);
+
+    const now =
+        new Date();
+
+    saleDate.setHours(0,0,0,0);
+    now.setHours(0,0,0,0);
+
+    const day =
+        now.getDay();
+
+    const diffToMonday =
+        day === 0 ? 6 : day - 1;
+
+    const monday =
+        new Date(now);
+
+    monday.setDate(
+        now.getDate() - diffToMonday
+    );
+
+    monday.setHours(0,0,0,0);
+
+    const nextMonday =
+        new Date(monday);
+
+    nextMonday.setDate(
+        monday.getDate() + 7
+    );
+
+    return (
+        saleDate >= monday &&
+        saleDate < nextMonday
+    );
+
+}
+
+
+function isThisMonth(sale){
+
+    const saleDate =
+        parseSaleDate(sale);
+
+    const now =
+        new Date();
+
+    return (
+        saleDate.getFullYear() === now.getFullYear() &&
+        saleDate.getMonth() === now.getMonth()
+    );
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function getFilteredSales(){
+
+    let result =
+        [...sales];
+
+    /* DATE */
+
+    if(activeFilter === "today"){
+
+        result =
+            result.filter(isToday);
+
+    }
+
+    if(activeFilter === "week"){
+
+        result =
+            result.filter(isThisWeek);
+
+    }
+
+    if(activeFilter === "month"){
+
+        result =
+            result.filter(isThisMonth);
+
+    }
+
+
+    /* SEARCH */
+
+    if(searchText){
+
+        const query =
+            searchText.toLowerCase();
+
+        result =
+            result.filter(sale => {
+
+                const productName =
+                    String(
+                        sale.productName || ""
+                    ).toLowerCase();
+
+                const payment =
+                    String(
+                        sale.paymentMethod || ""
+                    ).toLowerCase();
+
+                const note =
+                    String(
+                        sale.note || ""
+                    ).toLowerCase();
+
+                const id =
+                    String(
+                        sale.id || ""
+                    ).toLowerCase();
+
+                return (
+                    productName.includes(query) ||
+                    payment.includes(query) ||
+                    note.includes(query) ||
+                    id.includes(query)
+                );
+
+            });
+
+    }
+
+
+    /* NEWEST FIRST */
+
+    result.sort((a,b) => {
+
+        const dateA =
+            new Date(
+                a.createdAt || a.date || 0
+            ).getTime();
+
+        const dateB =
+            new Date(
+                b.createdAt || b.date || 0
+            ).getTime();
+
+        return dateB - dateA;
+
+    });
+
+    return result;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+    const filtered =
+        getFilteredSales();
+
+    renderSummary(filtered);
+
+    renderSales(filtered);
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function renderSummary(list){
+
+    let totalSales = 0;
+    let itemsSold = 0;
+
+    list.forEach(sale => {
+
+        totalSales +=
+            Number(sale.total) || 0;
+
+        itemsSold +=
+            Number(sale.quantity) || 0;
+
+    });
+
+    const transactions =
+        list.length;
+
+    const average =
+        transactions > 0
+            ? totalSales / transactions
+            : 0;
+
+
+    document.getElementById(
+        "totalSales"
+    ).textContent = peso(totalSales);
+
+
+    document.getElementById(
+        "transactionCount"
+    ).textContent = transactions;
+
+
+    document.getElementById(
+        "itemsSold"
+    ).textContent = itemsSold;
+
+
+    document.getElementById(
+        "averageSale"
+    ).textContent = peso(average);
+
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        `${transactions} ${
+            transactions === 1
+                ? "record"
+                : "records"
+        }`;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   RENDER SALES
+========================================================= */
+
+function renderSales(list){
+
+    const container =
+        document.getElementById("salesList");
+
+    if(!list.length){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🧾
+                </div>
+
+                <h3>No transactions found</h3>
+
+                <p>
+                    Your sales history will appear here
+                    after you record a sale.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        list.map(sale => {
+
+            const icon =
+                sale.productIcon || "📦";
+
+            const name =
+                escapeHTML(
+                    sale.productName || "Unknown Product"
+                );
+
+            const quantity =
+                Number(sale.quantity) || 0;
+
+            const unitPrice =
+                Number(sale.unitPrice) || 0;
+
+            const total =
+                Number(sale.total) ||
+                quantity * unitPrice;
+
+            const payment =
+                escapeHTML(
+                    sale.paymentMethod || "Cash"
+                );
+
+            const note =
+                sale.note
+                    ? escapeHTML(sale.note)
+                    : "";
+
+            const date =
+                formatDate(sale);
+
+            const time =
+                formatTime(sale);
+
+
+            return `
+
+                <article class="sale-card">
+
+                    <div class="sale-top">
+
+                        <div class="sale-icon">
+                            ${escapeHTML(icon)}
+                        </div>
+
+                        <div class="sale-info">
+
+                            <div class="sale-name">
+                                ${name}
+                            </div>
+
+                            <div class="sale-meta">
+
+                                <span>
+                                    ${date}
+                                </span>
+
+                                ${
+                                    time
+                                        ? `<span>• ${time}</span>`
+                                        : ""
+                                }
+
+                                <span class="payment">
+                                    ${payment}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="sale-total">
+
+                            <div class="sale-total-label">
+                                Total
+                            </div>
+
+                            <div class="sale-total-value">
+                                ${peso(total)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sale-bottom">
+
+                        <div class="sale-details">
+
+                            <span>
+                                ${quantity} item${
+                                    quantity === 1 ? "" : "s"
+                                }
+                                × ${peso(unitPrice)}
+                            </span>
+
+                            ${
+                                note
+                                    ? `
+                                    <span class="note">
+                                        📝 ${note}
+                                    </span>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="openDeleteModal('${escapeAttribute(sale.id)}')"
+                            title="Delete transaction"
+                        >
+                            🗑
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeAttribute(value){
+
+    return String(value ?? "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,"&quot;");
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+document
+    .getElementById("searchInput")
+    .addEventListener("input", function(){
+
+        searchText =
+            this.value.trim();
+
+        render();
+
+    });
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+function setFilter(filter, button){
+
+    activeFilter =
+        filter;
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+    button.classList.add("active");
+
+    render();
+
+}
+
+
+/* =========================================================
+   DELETE MODAL
+========================================================= */
+
+function openDeleteModal(id){
+
+    saleToDelete =
+        sales.find(
+            sale => String(sale.id) === String(id)
+        );
+
+    if(!saleToDelete){
+        return;
+    }
+
+
+    const productName =
+        saleToDelete.productName ||
+        "this transaction";
+
+    document.getElementById(
+        "deleteMessage"
+    ).textContent =
+        `Delete the ${productName} transaction? The sold quantity will be returned to your inventory if the product still exists.`;
+
+
+    document
+        .getElementById("deleteModal")
+        .classList.add("show");
+
+}
+
+
+function closeDeleteModal(){
+
+    saleToDelete =
+        null;
+
+    document
+        .getElementById("deleteModal")
+        .classList.remove("show");
+
+}
+
+
+/* =========================================================
+   CONFIRM DELETE
+========================================================= */
+
+function confirmDelete(){
+
+    if(!saleToDelete){
+        return;
+    }
+
+
+    const sale =
+        saleToDelete;
+
+
+    /*
+        Restore inventory.
+
+        When a sale was created in sales.html,
+        the product stock was reduced.
+
+        When deleting the sale, restore the
+        sold quantity back to that product.
+    */
+
+    const productIndex =
+        products.findIndex(product => {
+
+            const productId =
+                product.id ??
+                product.productId ??
+                product._id;
+
+            const saleProductId =
+                sale.productId;
+
+            return (
+                String(productId) ===
+                String(saleProductId)
+            );
+
+        });
+
+
+    if(productIndex !== -1){
+
+        const oldStock =
+            Number(
+                products[productIndex].stock ??
+                products[productIndex].quantity ??
+                0
+            );
+
+        const soldQuantity =
+            Number(sale.quantity) || 0;
+
+
+        const restoredStock =
+            oldStock + soldQuantity;
+
+
+        if(
+            Object.prototype.hasOwnProperty.call(
+                products[productIndex],
+                "stock"
+            )
+        ){
+
+            products[productIndex].stock =
+                restoredStock;
+
+        }else{
+
+            products[productIndex].quantity =
+                restoredStock;
+
+        }
+
+
+        products[productIndex].updatedAt =
+            new Date().toISOString();
+
+
+        saveProducts();
+
+    }
+
+
+    /* Remove transaction */
+
+    sales =
+        sales.filter(
+            item =>
+                String(item.id) !==
+                String(sale.id)
+        );
+
+
+    saveSales();
+
+    closeDeleteModal();
+
+    render();
+
+
+    if(productIndex !== -1){
+
+        showToast(
+            "Transaction deleted and stock restored."
+        );
+
+    }else{
+
+        showToast(
+            "Transaction deleted. Product was not found, so stock was not restored."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        },3000);
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+    .getElementById("deleteModal")
+    .addEventListener("click", function(event){
+
+        if(event.target === this){
+
+            closeDeleteModal();
+
+        }
+
+    });
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeDeleteModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+applyTheme();
+
+loadData();
+
+</script>
+
+</body>
+</html>

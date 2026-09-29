@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendora — Reports</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#6750d8;
+    --primary-dark:#5140bd;
+    --accent:#f5c542;
+    --bg:#eceaf2;
+    --surface:#ffffff;
+    --surface-2:#f7f6fb;
+    --text:#252332;
+    --muted:#777487;
+    --border:#e8e5ef;
+    --success:#22a06b;
+    --danger:#e04d5d;
+    --orange:#e89025;
+    --shadow:0 8px 24px rgba(45,36,90,.08);
+}
+
+body.dark{
+    --bg:#15141c;
+    --surface:#211f2b;
+    --surface-2:#2a2835;
+    --text:#f5f3fb;
+    --muted:#aaa6b8;
+    --border:#393646;
+    --shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.app{
+    width:390px;
+    max-width:100%;
+    min-height:100vh;
+    margin:0 auto;
+    background:var(--bg);
+    padding-bottom:88px;
+}
+
+/* HEADER */
+
+.header{
+    padding:20px 18px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.back-btn,
+.theme-btn{
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:12px;
+    background:var(--surface);
+    color:var(--text);
+    box-shadow:var(--shadow);
+    cursor:pointer;
+}
+
+.back-btn{
+    font-size:20px;
+}
+
+.theme-btn{
+    font-size:17px;
+}
+
+.header-text h1{
+    font-size:21px;
+}
+
+.header-text p{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* CONTENT */
+
+.content{
+    padding:8px 16px 20px;
+}
+
+/* PERIOD FILTER */
+
+.period-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:13px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.period-label{
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:8px;
+}
+
+.period-buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+
+.period-btn{
+    height:37px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--muted);
+    border-radius:10px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.period-btn.active{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+}
+
+/* MAIN STATS */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    box-shadow:var(--shadow);
+}
+
+.stat-icon{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    background:#eeeafd;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    margin-bottom:9px;
+}
+
+body.dark .stat-icon{
+    background:#302b50;
+}
+
+.stat-label{
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:4px;
+}
+
+.stat-value{
+    font-size:18px;
+    font-weight:800;
+}
+
+/* SECTION */
+
+.section{
+    margin-bottom:15px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:4px 2px 9px;
+}
+
+.section-header h2{
+    font-size:15px;
+}
+
+.section-header span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* CARD */
+
+.card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:15px;
+}
+
+/* SALES OVERVIEW */
+
+.overview-number{
+    font-size:25px;
+    font-weight:800;
+    margin-bottom:4px;
+}
+
+.overview-sub{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* BAR CHART */
+
+.chart{
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+    height:145px;
+    padding-top:12px;
+    margin-top:8px;
+    border-bottom:1px solid var(--border);
+}
+
+.bar-column{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    min-width:0;
+}
+
+.bar-value{
+    font-size:8px;
+    color:var(--muted);
+    margin-bottom:5px;
+    white-space:nowrap;
+}
+
+.bar{
+    width:100%;
+    max-width:27px;
+    min-height:3px;
+    background:var(--primary);
+    border-radius:7px 7px 0 0;
+    transition:.25s ease;
+}
+
+.bar-label{
+    font-size:8px;
+    color:var(--muted);
+    margin-top:6px;
+}
+
+/* PRODUCT ROWS */
+
+.product-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.product-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px;
+    border-radius:12px;
+    background:var(--surface-2);
+}
+
+.product-rank{
+    width:25px;
+    height:25px;
+    border-radius:8px;
+    background:#eae6fb;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    font-weight:800;
+}
+
+body.dark .product-rank{
+    background:#302b50;
+}
+
+.product-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:var(--surface);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.product-info{
+    flex:1;
+    min-width:0;
+}
+
+.product-name{
+    font-size:12px;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.product-sold{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.product-total{
+    font-size:12px;
+    font-weight:800;
+    color:var(--primary);
+}
+
+/* PAYMENT */
+
+.payment-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.payment-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.payment-icon{
+    width:36px;
+    height:36px;
+    border-radius:11px;
+    background:var(--surface-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+}
+
+.payment-info{
+    flex:1;
+}
+
+.payment-name{
+    font-size:12px;
+    font-weight:700;
+}
+
+.payment-count{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.payment-amount{
+    font-size:12px;
+    font-weight:800;
+}
+
+/* PROGRESS */
+
+.progress{
+    height:7px;
+    border-radius:10px;
+    background:var(--border);
+    overflow:hidden;
+    margin-top:6px;
+}
+
+.progress-fill{
+    height:100%;
+    background:var(--primary);
+    border-radius:10px;
+}
+
+/* EMPTY */
+
+.empty{
+    text-align:center;
+    padding:30px 18px;
+}
+
+.empty-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    background:#eeeafd;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    font-size:26px;
+}
+
+body.dark .empty-icon{
+    background:#302b50;
+}
+
+.empty h3{
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.empty p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.5;
+}
+
+/* NAV */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:390px;
+    max-width:100%;
+    height:70px;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    z-index:20;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    min-width:52px;
+}
+
+.nav-item span:first-child{
+    font-size:18px;
+}
+
+.nav-item span:last-child{
+    font-size:9px;
+}
+
+.nav-item.active{
+    color:var(--primary);
+    font-weight:700;
+}
+
+@media(min-width:391px){
+    .bottom-nav{
+        left:50%;
+        transform:translateX(-50%);
+    }
+}
+
+@media(max-width:390px){
+    .bottom-nav{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="header-left">
+
+            <button class="back-btn" onclick="location.href='home.html'">
+                ←
+            </button>
+
+            <div class="header-text">
+                <h1>Reports</h1>
+                <p>Store performance overview</p>
+            </div>
+
+        </div>
+
+        <button
+            class="theme-btn"
+            id="themeBtn"
+            onclick="toggleTheme()"
+        >
+            ☾
+        </button>
+
+    </header>
+
+
+    <main class="content">
+
+        <!-- PERIOD -->
+        <section class="period-card">
+
+            <div class="period-label">
+                Report Period
+            </div>
+
+            <div class="period-buttons">
+
+                <button
+                    class="period-btn active"
+                    data-period="today"
+                    onclick="changePeriod('today',this)"
+                >
+                    Today
+                </button>
+
+                <button
+                    class="period-btn"
+                    data-period="week"
+                    onclick="changePeriod('week',this)"
+                >
+                    This Week
+                </button>
+
+                <button
+                    class="period-btn"
+                    data-period="month"
+                    onclick="changePeriod('month',this)"
+                >
+                    This Month
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ₱
+                </div>
+
+                <div class="stat-label">
+                    Total Sales
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="totalSales"
+                >
+                    ₱0.00
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🧾
+                </div>
+
+                <div class="stat-label">
+                    Transactions
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="transactions"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <div class="stat-label">
+                    Items Sold
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="itemsSold"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📊
+                </div>
+
+                <div class="stat-label">
+                    Average Sale
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="averageSale"
+                >
+                    ₱0.00
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SALES OVERVIEW -->
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Sales Overview</h2>
+                <span id="periodLabel">Today</span>
+            </div>
+
+            <div class="card">
+
+                <div
+                    class="overview-number"
+                    id="overviewTotal"
+                >
+                    ₱0.00
+                </div>
+
+                <div class="overview-sub">
+                    Total sales for selected period
+                </div>
+
+                <div
+                    class="chart"
+                    id="salesChart"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOP PRODUCTS -->
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Top-Selling Products</h2>
+                <span id="topProductLabel">
+                    Selected period
+                </span>
+            </div>
+
+            <div class="card">
+
+                <div
+                    class="product-list"
+                    id="productList"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAYMENT METHODS -->
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Payment Methods</h2>
+                <span>Sales breakdown</span>
+            </div>
+
+            <div class="card">
+
+                <div
+                    class="payment-list"
+                    id="paymentList"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INVENTORY -->
+        <section class="section">
+
+            <div class="section-header">
+                <h2>Inventory Overview</h2>
+                <span>Current stock</span>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📦
+                    </div>
+
+                    <div class="stat-label">
+                        Products
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="productCount"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="stat-label">
+                        Low Stock
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="lowStock"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- NAVIGATION -->
+    <nav class="bottom-nav">
+
+        <a class="nav-item" href="home.html">
+            <span>⌂</span>
+            <span>Home</span>
+        </a>
+
+        <a class="nav-item" href="products.html">
+            <span>▦</span>
+            <span>Products</span>
+        </a>
+
+        <a class="nav-item" href="sales.html">
+            <span>₱</span>
+            <span>Sales</span>
+        </a>
+
+        <a class="nav-item active" href="reports.html">
+            <span>▥</span>
+            <span>Reports</span>
+        </a>
+
+        <a class="nav-item" href="settings.html">
+            <span>⚙</span>
+            <span>More</span>
+        </a>
+
+    </nav>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const PRODUCTS_KEY = "vendora_products_v1";
+const SALES_KEY = "vendora_sales_v1";
+const THEME_KEY = "vendora_theme_v1";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let products = [];
+let sales = [];
+
+let currentPeriod = "today";
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+function loadData(){
+
+    try{
+        products =
+            JSON.parse(
+                localStorage.getItem(PRODUCTS_KEY) || "[]"
+            );
+    }catch(error){
+        products = [];
+    }
+
+    try{
+        sales =
+            JSON.parse(
+                localStorage.getItem(SALES_KEY) || "[]"
+            );
+    }catch(error){
+        sales = [];
+    }
+
+    if(!Array.isArray(products)){
+        products = [];
+    }
+
+    if(!Array.isArray(sales)){
+        sales = [];
+    }
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+    const theme =
+        localStorage.getItem(THEME_KEY) || "light";
+
+    if(theme === "dark"){
+
+        document.body.classList.add("dark");
+
+        document.getElementById(
+            "themeBtn"
+        ).textContent = "☀";
+
+    }else{
+
+        document.body.classList.remove("dark");
+
+        document.getElementById(
+            "themeBtn"
+        ).textContent = "☾";
+
+    }
+
+}
+
+
+function toggleTheme(){
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        THEME_KEY,
+        dark ? "light" : "dark"
+    );
+
+    applyTheme();
+
+}
+
+
+/* =========================================================
+   CURRENCY
+========================================================= */
+
+function peso(value){
+
+    return new Intl.NumberFormat(
+        "en-PH",
+        {
+            style:"currency",
+            currency:"PHP"
+        }
+    ).format(Number(value) || 0);
+
+}
+
+
+/* =========================================================
+   LOCAL DATE
+========================================================= */
+
+function localDateString(date = new Date()){
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2,"0");
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================================================
+   SALE DATE
+========================================================= */
+
+function saleDate(sale){
+
+    if(sale.date){
+
+        const value =
+            String(sale.date);
+
+        if(
+            /^\d{4}-\d{2}-\d{2}$/.test(value)
+        ){
+
+            const parts =
+                value.split("-").map(Number);
+
+            return new Date(
+                parts[0],
+                parts[1] - 1,
+                parts[2]
+            );
+
+        }
+
+    }
+
+    if(sale.createdAt){
+
+        const date =
+            new Date(sale.createdAt);
+
+        if(!isNaN(date.getTime())){
+            return date;
+        }
+
+    }
+
+    return new Date();
+
+}
+
+
+/* =========================================================
+   DATE RANGE
+========================================================= */
+
+function getPeriodRange(){
+
+    const now =
+        new Date();
+
+    const start =
+        new Date(now);
+
+    start.setHours(0,0,0,0);
+
+
+    if(currentPeriod === "today"){
+
+        return {
+            start:start,
+            end:now
+        };
+
+    }
+
+
+    if(currentPeriod === "week"){
+
+        const day =
+            start.getDay();
+
+        const mondayOffset =
+            day === 0 ? 6 : day - 1;
+
+        start.setDate(
+            start.getDate() - mondayOffset
+        );
+
+        return {
+            start:start,
+            end:now
+        };
+
+    }
+
+
+    if(currentPeriod === "month"){
+
+        start.setDate(1);
+
+        return {
+            start:start,
+            end:now
+        };
+
+    }
+
+
+    return {
+        start:start,
+        end:now
+    };
+
+}
+
+
+/* =========================================================
+   FILTER SALES
+========================================================= */
+
+function getFilteredSales(){
+
+    const range =
+        getPeriodRange();
+
+    return sales.filter(sale => {
+
+        const date =
+            saleDate(sale);
+
+        date.setHours(0,0,0,0);
+
+        return (
+            date >= range.start &&
+            date <= range.end
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   CHANGE PERIOD
+========================================================= */
+
+function changePeriod(period, button){
+
+    currentPeriod =
+        period;
+
+    document
+        .querySelectorAll(".period-btn")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+    button.classList.add("active");
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   PERIOD NAME
+========================================================= */
+
+function getPeriodName(){
+
+    if(currentPeriod === "today"){
+        return "Today";
+    }
+
+    if(currentPeriod === "week"){
+        return "This Week";
+    }
+
+    return "This Month";
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll(){
+
+    const filtered =
+        getFilteredSales();
+
+    renderStats(filtered);
+
+    renderOverview(filtered);
+
+    renderTopProducts(filtered);
+
+    renderPayments(filtered);
+
+    renderInventory();
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function renderStats(list){
+
+    let total = 0;
+    let items = 0;
+
+    list.forEach(sale => {
+
+        total +=
+            Number(sale.total) || 0;
+
+        items +=
+            Number(sale.quantity) || 0;
+
+    });
+
+
+    const transactions =
+        list.length;
+
+    const average =
+        transactions
+            ? total / transactions
+            : 0;
+
+
+    document.getElementById(
+        "totalSales"
+    ).textContent =
+        peso(total);
+
+
+    document.getElementById(
+        "transactions"
+    ).textContent =
+        transactions;
+
+
+    document.getElementById(
+        "itemsSold"
+    ).textContent =
+        items;
+
+
+    document.getElementById(
+        "averageSale"
+    ).textContent =
+        peso(average);
+
+
+    document.getElementById(
+        "overviewTotal"
+    ).textContent =
+        peso(total);
+
+
+    document.getElementById(
+        "periodLabel"
+    ).textContent =
+        getPeriodName();
+
+
+    document.getElementById(
+        "topProductLabel"
+    ).textContent =
+        getPeriodName();
+
+}
+
+
+/* =========================================================
+   SALES CHART
+========================================================= */
+
+function renderOverview(list){
+
+    const chart =
+        document.getElementById("salesChart");
+
+    if(!list.length){
+
+        chart.innerHTML = `
+            <div class="empty" style="width:100%;">
+                <div class="empty-icon">📊</div>
+                <h3>No sales yet</h3>
+                <p>
+                    Record sales to see your report chart.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let labels = [];
+    let values = [];
+
+
+    if(currentPeriod === "today"){
+
+        /*
+            Today: group sales by hour.
+        */
+
+        labels =
+            ["8AM","10AM","12PM","2PM","4PM","6PM","8PM"];
+
+        values =
+            [0,0,0,0,0,0,0];
+
+
+        list.forEach(sale => {
+
+            if(!sale.createdAt){
+                return;
+            }
+
+            const date =
+                new Date(sale.createdAt);
+
+            if(isNaN(date.getTime())){
+                return;
+            }
+
+            const hour =
+                date.getHours();
+
+            let index;
+
+            if(hour < 10){
+                index = 0;
+            }else if(hour < 12){
+                index = 1;
+            }else if(hour < 14){
+                index = 2;
+            }else if(hour < 16){
+                index = 3;
+            }else if(hour < 18){
+                index = 4;
+            }else if(hour < 20){
+                index = 5;
+            }else{
+                index = 6;
+            }
+
+            values[index] +=
+                Number(sale.total) || 0;
+
+        });
+
+    }else if(currentPeriod === "week"){
+
+        labels =
+            ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+        values =
+            [0,0,0,0,0,0,0];
+
+
+        list.forEach(sale => {
+
+            const date =
+                saleDate(sale);
+
+            const day =
+                date.getDay();
+
+            const index =
+                day === 0 ? 6 : day - 1;
+
+            values[index] +=
+                Number(sale.total) || 0;
+
+        });
+
+    }else{
+
+        /*
+            This month: group by week.
+        */
+
+        labels =
+            ["Week 1","Week 2","Week 3","Week 4","Week 5"];
+
+        values =
+            [0,0,0,0,0];
+
+
+        list.forEach(sale => {
+
+            const date =
+                saleDate(sale);
+
+            const day =
+                date.getDate();
+
+            let index =
+                Math.floor((day - 1) / 7);
+
+            if(index > 4){
+                index = 4;
+            }
+
+            values[index] +=
+                Number(sale.total) || 0;
+
+        });
+
+    }
+
+
+    const max =
+        Math.max(...values,1);
+
+
+    chart.innerHTML =
+        values.map((value,index) => {
+
+            const height =
+                Math.max(
+                    4,
+                    (value / max) * 100
+                );
+
+            return `
+
+                <div class="bar-column">
+
+                    <div class="bar-value">
+                        ${value > 0 ? peso(value) : ""}
+                    </div>
+
+                    <div
+                        class="bar"
+                        style="height:${height}%"
+                    ></div>
+
+                    <div class="bar-label">
+                        ${labels[index]}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   TOP PRODUCTS
+========================================================= */
+
+function renderTopProducts(list){
+
+    const container =
+        document.getElementById("productList");
+
+
+    if(!list.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">📦</div>
+                <h3>No product sales</h3>
+                <p>
+                    Your best-selling products will
+                    appear here.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const map = {};
+
+
+    list.forEach(sale => {
+
+        const id =
+            sale.productId ||
+            sale.productName ||
+            "unknown";
+
+
+        if(!map[id]){
+
+            map[id] = {
+                name:
+                    sale.productName ||
+                    "Unknown Product",
+
+                icon:
+                    sale.productIcon ||
+                    "📦",
+
+                quantity:0,
+
+                total:0
+
+            };
+
+        }
+
+
+        map[id].quantity +=
+            Number(sale.quantity) || 0;
+
+        map[id].total +=
+            Number(sale.total) || 0;
+
+    });
+
+
+    const productsArray =
+        Object.values(map)
+        .sort((a,b) => {
+
+            return b.quantity - a.quantity;
+
+        })
+        .slice(0,5);
+
+
+    container.innerHTML =
+        productsArray.map((product,index) => {
+
+            return `
+
+                <div class="product-row">
+
+                    <div class="product-rank">
+                        ${index + 1}
+                    </div>
+
+                    <div class="product-icon">
+                        ${escapeHTML(product.icon)}
+                    </div>
+
+                    <div class="product-info">
+
+                        <div class="product-name">
+                            ${escapeHTML(product.name)}
+                        </div>
+
+                        <div class="product-sold">
+                            ${product.quantity}
+                            item${product.quantity === 1 ? "" : "s"} sold
+                        </div>
+
+                    </div>
+
+                    <div class="product-total">
+                        ${peso(product.total)}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   PAYMENT METHODS
+========================================================= */
+
+function renderPayments(list){
+
+    const container =
+        document.getElementById("paymentList");
+
+
+    if(!list.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">💳</div>
+                <h3>No payment data</h3>
+                <p>
+                    Payment method statistics will
+                    appear after recording sales.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const payments = {};
+
+
+    list.forEach(sale => {
+
+        const method =
+            sale.paymentMethod ||
+            "Cash";
+
+        if(!payments[method]){
+
+            payments[method] = {
+                count:0,
+                total:0
+            };
+
+        }
+
+
+        payments[method].count++;
+
+        payments[method].total +=
+            Number(sale.total) || 0;
+
+    });
+
+
+    const totalSales =
+        list.reduce(
+            (sum,sale) =>
+                sum + (Number(sale.total) || 0),
+            0
+        );
+
+
+    container.innerHTML =
+        Object.entries(payments)
+        .sort(
+            (a,b) =>
+                b[1].total - a[1].total
+        )
+        .map(([method,data]) => {
+
+            const percentage =
+                totalSales > 0
+                    ? (data.total / totalSales) * 100
+                    : 0;
+
+
+            let icon = "💵";
+
+            if(method.toLowerCase() === "gcash"){
+                icon = "📱";
+            }
+
+            if(method.toLowerCase() === "other"){
+                icon = "💳";
+            }
+
+
+            return `
+
+                <div class="payment-row">
+
+                    <div class="payment-icon">
+                        ${icon}
+                    </div>
+
+                    <div class="payment-info">
+
+                        <div class="payment-name">
+                            ${escapeHTML(method)}
+                        </div>
+
+                        <div class="payment-count">
+                            ${data.count}
+                            transaction${data.count === 1 ? "" : "s"}
+                        </div>
+
+                        <div class="progress">
+                            <div
+                                class="progress-fill"
+                                style="width:${percentage}%"
+                            ></div>
+                        </div>
+
+                    </div>
+
+                    <div class="payment-amount">
+                        ${peso(data.total)}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   INVENTORY
+========================================================= */
+
+function renderInventory(){
+
+    document.getElementById(
+        "productCount"
+    ).textContent =
+        products.length;
+
+
+    let lowStock = 0;
+
+
+    products.forEach(product => {
+
+        const stock =
+            Number(
+                product.stock ??
+                product.quantity ??
+                0
+            );
+
+
+        const minimum =
+            Number(
+                product.minStock ??
+                product.minimumStock ??
+                product.lowStock ??
+                5
+            );
+
+
+        if(
+            stock > 0 &&
+            stock <= minimum
+        ){
+
+            lowStock++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "lowStock"
+    ).textContent =
+        lowStock;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+applyTheme();
+
+loadData();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6750d8">
+<title>Vendora — Settings</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --primary:#6750d8;
+    --primary-dark:#5140bd;
+    --primary-soft:#eeeaff;
+    --accent:#f5c542;
+    --bg:#f5f3fa;
+    --surface:#ffffff;
+    --surface-2:#f8f7fc;
+    --text:#252332;
+    --muted:#817d90;
+    --border:#e9e6f1;
+    --danger:#df4e5d;
+    --success:#22a06b;
+    --shadow:0 7px 22px rgba(50,40,100,.07);
+}
+
+body.dark{
+    --bg:#15141c;
+    --surface:#211f2b;
+    --surface-2:#2a2835;
+    --text:#f6f4fb;
+    --muted:#aaa6b8;
+    --border:#393646;
+    --primary-soft:#302b50;
+    --shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+html,
+body{
+    min-height:100%;
+}
+
+body{
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+.app{
+    width:390px;
+    max-width:100%;
+    min-height:100vh;
+    margin:0 auto;
+    background:var(--bg);
+    padding-bottom:86px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    height:72px;
+    padding:12px 17px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.back-btn,
+.theme-btn{
+    width:39px;
+    height:39px;
+    border:0;
+    border-radius:12px;
+    background:var(--surface-2);
+    color:var(--text);
+    cursor:pointer;
+    display:grid;
+    place-items:center;
+    font-size:18px;
+}
+
+.back-btn:active,
+.theme-btn:active{
+    transform:scale(.96);
+}
+
+.header-text h1{
+    font-size:18px;
+    font-weight:800;
+}
+
+.header-text p{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:3px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:18px 15px 20px;
+}
+
+.page-intro{
+    margin:2px 3px 17px;
+}
+
+.page-intro small{
+    color:var(--primary);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.page-intro h2{
+    font-size:22px;
+    margin-top:5px;
+    letter-spacing:-.4px;
+}
+
+.page-intro p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+/* =========================
+   ACCOUNT CARD
+========================= */
+
+.account-card{
+    background:linear-gradient(135deg,#6750d8,#826de6);
+    color:white;
+    border-radius:21px;
+    padding:17px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    box-shadow:0 12px 28px rgba(103,80,216,.22);
+    margin-bottom:18px;
+}
+
+.account-avatar{
+    width:52px;
+    height:52px;
+    flex:0 0 52px;
+    border-radius:17px;
+    background:rgba(255,255,255,.17);
+    border:1px solid rgba(255,255,255,.22);
+    display:grid;
+    place-items:center;
+    font-size:21px;
+    font-weight:800;
+}
+
+.account-info{
+    min-width:0;
+    flex:1;
+}
+
+.account-info h3{
+    font-size:15px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.account-info p{
+    font-size:10px;
+    opacity:.8;
+    margin-top:4px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.account-action{
+    border:1px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.13);
+    color:white;
+    border-radius:10px;
+    padding:8px 10px;
+    font-size:9px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+    margin-bottom:17px;
+}
+
+.section-title{
+    font-size:11px;
+    font-weight:800;
+    margin:0 3px 8px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+/* =========================
+   SETTINGS CARD
+========================= */
+
+.settings-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.setting-row{
+    width:100%;
+    min-height:64px;
+    padding:11px 13px;
+    border:0;
+    border-bottom:1px solid var(--border);
+    background:transparent;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:11px;
+    text-align:left;
+    cursor:pointer;
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-row:active{
+    background:var(--surface-2);
+}
+
+.setting-icon{
+    width:39px;
+    height:39px;
+    flex:0 0 39px;
+    border-radius:12px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    display:grid;
+    place-items:center;
+    font-size:17px;
+}
+
+.setting-info{
+    min-width:0;
+    flex:1;
+}
+
+.setting-name{
+    font-size:12px;
+    font-weight:750;
+}
+
+.setting-description{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+    line-height:1.35;
+}
+
+.arrow{
+    color:var(--muted);
+    font-size:18px;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+.toggle{
+    width:43px;
+    height:24px;
+    border:0;
+    border-radius:20px;
+    background:#c7c4cf;
+    padding:3px;
+    cursor:pointer;
+}
+
+.toggle span{
+    display:block;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 1px 4px rgba(0,0,0,.15);
+    transition:.2s;
+}
+
+.toggle.active{
+    background:var(--primary);
+}
+
+.toggle.active span{
+    transform:translateX(19px);
+}
+
+/* =========================
+   EMPTY ACCOUNT
+========================= */
+
+.empty-account{
+    padding:19px 15px;
+    text-align:center;
+}
+
+.empty-account .empty-icon{
+    width:48px;
+    height:48px;
+    margin:0 auto 10px;
+    border-radius:15px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.empty-account strong{
+    display:block;
+    font-size:13px;
+}
+
+.empty-account p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.5;
+    margin:5px auto 13px;
+    max-width:250px;
+}
+
+.create-btn{
+    border:0;
+    border-radius:11px;
+    background:var(--primary);
+    color:white;
+    height:40px;
+    padding:0 17px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(15,12,25,.48);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal-backdrop.show{
+    display:flex;
+}
+
+.modal{
+    width:390px;
+    max-width:100%;
+    max-height:92vh;
+    overflow-y:auto;
+    background:var(--surface);
+    border-radius:23px 23px 0 0;
+    padding:20px 17px 25px;
+    animation:slideUp .2s ease;
+}
+
+@keyframes slideUp{
+    from{
+        transform:translateY(25px);
+        opacity:.5;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.modal-handle{
+    width:38px;
+    height:4px;
+    border-radius:5px;
+    background:var(--border);
+    margin:0 auto 17px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+}
+
+.modal-header h3{
+    font-size:17px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:10px;
+    background:var(--surface-2);
+    color:var(--text);
+    cursor:pointer;
+    font-size:16px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-label{
+    display:block;
+    font-size:10px;
+    font-weight:750;
+    margin-bottom:6px;
+}
+
+.form-input{
+    width:100%;
+    height:43px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:var(--surface-2);
+    color:var(--text);
+    padding:0 12px;
+    outline:none;
+    font-size:11px;
+}
+
+.form-input:focus{
+    border-color:var(--primary);
+}
+
+.form-input::placeholder{
+    color:#aaa6b5;
+}
+
+.form-actions{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:9px;
+    margin-top:17px;
+}
+
+.cancel-btn,
+.save-btn{
+    height:43px;
+    border:0;
+    border-radius:11px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.cancel-btn{
+    background:var(--surface-2);
+    color:var(--text);
+}
+
+.save-btn{
+    background:var(--primary);
+    color:white;
+}
+
+/* =========================
+   STORE INFO
+========================= */
+
+.store-info-preview{
+    display:none;
+}
+
+.store-info-preview.show{
+    display:block;
+}
+
+.info-box{
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.store-avatar{
+    width:45px;
+    height:45px;
+    border-radius:14px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    display:grid;
+    place-items:center;
+    font-weight:800;
+}
+
+.store-info-text{
+    flex:1;
+    min-width:0;
+}
+
+.store-info-text strong{
+    display:block;
+    font-size:12px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.store-info-text span{
+    display:block;
+    font-size:9px;
+    color:var(--muted);
+    margin-top:3px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.edit-small{
+    border:0;
+    border-radius:9px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    padding:8px 10px;
+    font-size:9px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* =========================
+   DANGER
+========================= */
+
+.danger .setting-icon{
+    background:#fff0f2;
+    color:var(--danger);
+}
+
+body.dark .danger .setting-icon{
+    background:#3b2429;
+}
+
+.danger .setting-name{
+    color:var(--danger);
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:19px;
+    text-align:center;
+    box-shadow:var(--shadow);
+}
+
+.about-logo{
+    width:55px;
+    height:55px;
+    margin:0 auto 9px;
+    border-radius:17px;
+    background:var(--primary);
+    color:white;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    font-weight:800;
+}
+
+.about-card h3{
+    font-size:16px;
+}
+
+.version{
+    display:inline-block;
+    margin-top:6px;
+    padding:4px 8px;
+    border-radius:7px;
+    background:var(--surface-2);
+    color:var(--muted);
+    font-size:8px;
+}
+
+.about-card p{
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.6;
+    margin-top:11px;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:390px;
+    max-width:100%;
+    height:70px;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    z-index:50;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    font-size:9px;
+}
+
+.nav-item span:first-child{
+    font-size:18px;
+}
+
+.nav-item.active{
+    color:var(--primary);
+    font-weight:700;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:83px;
+    transform:translate(-50%,20px);
+    background:#27242f;
+    color:white;
+    padding:10px 14px;
+    border-radius:11px;
+    font-size:10px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:200;
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:390px){
+    .app{
+        width:100%;
+    }
+
+    .bottom-nav{
+        width:100%;
+    }
+
+    .modal{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="header-left">
+
+            <button class="back-btn" onclick="location.href='home.html'">
+                ←
+            </button>
+
+            <div class="header-text">
+                <h1>Settings</h1>
+                <p>Manage your Vendora account</p>
+            </div>
+
+        </div>
+
+        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">
+            ☾
+        </button>
+
+    </header>
+
+
+    <main class="content">
+
+        <!-- INTRO -->
+        <section class="page-intro">
+
+            <small>SETTINGS</small>
+
+            <h2>Your Settings</h2>
+
+            <p>
+                Manage your account, store information,
+                appearance, and app data.
+            </p>
+
+        </section>
+
+
+        <!-- ACCOUNT -->
+        <section class="section">
+
+            <div class="section-title">
+                Account
+            </div>
+
+            <div class="settings-card">
+
+                <!-- EMPTY ACCOUNT -->
+                <div id="emptyAccount" class="empty-account">
+
+                    <div class="empty-icon">
+                        👤
+                    </div>
+
+                    <strong>
+                        No account yet
+                    </strong>
+
+                    <p>
+                        Create your account to save your
+                        personal information in Vendora.
+                    </p>
+
+                    <button class="create-btn" onclick="openAccountModal('create')">
+                        + Create Account
+                    </button>
+
+                </div>
+
+
+                <!-- ACCOUNT EXISTS -->
+                <div id="accountInfo" style="display:none">
+
+                    <div class="info-box">
+
+                        <div class="store-avatar" id="accountAvatar">
+                            A
+                        </div>
+
+                        <div class="store-info-text">
+
+                            <strong id="accountName">
+                                Account Name
+                            </strong>
+
+                            <span id="accountEmail">
+                                email@example.com
+                            </span>
+
+                        </div>
+
+                        <button
+                            class="edit-small"
+                            onclick="openAccountModal('edit')"
+                        >
+                            Edit
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STORE INFORMATION -->
+        <section class="section">
+
+            <div class="section-title">
+                Store
+            </div>
+
+            <div class="settings-card">
+
+                <!-- CLICKABLE ROW -->
+                <button
+                    class="setting-row"
+                    onclick="openStoreModal()"
+                >
+
+                    <div class="setting-icon">
+                        🏪
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Store Information
+                        </div>
+
+                        <div class="setting-description">
+                            Add or edit your store name and description
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">
+                        ›
+                    </div>
+
+                </button>
+
+
+                <!-- STORE PREVIEW AFTER SAVING -->
+                <div
+                    class="store-info-preview"
+                    id="storePreview"
+                >
+
+                    <div class="info-box">
+
+                        <div class="store-avatar">
+                            V
+                        </div>
+
+                        <div class="store-info-text">
+
+                            <strong id="previewStoreName">
+                                My Store
+                            </strong>
+
+                            <span id="previewStoreDescription">
+                                Store description
+                            </span>
+
+                        </div>
+
+                        <button
+                            class="edit-small"
+                            onclick="openStoreModal()"
+                        >
+                            Edit
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPEARANCE -->
+        <section class="section">
+
+            <div class="section-title">
+                Appearance
+            </div>
+
+            <div class="settings-card">
+
+                <button
+                    class="setting-row"
+                    onclick="toggleTheme()"
+                >
+
+                    <div class="setting-icon">
+                        🌙
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Dark Mode
+                        </div>
+
+                        <div class="setting-description">
+                            Change the appearance of Vendora
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="toggle"
+                        id="darkToggle"
+                    >
+                        <span></span>
+                    </div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACCESS -->
+        <section class="section">
+
+            <div class="section-title">
+                Quick Access
+            </div>
+
+            <div class="settings-card">
+
+                <button
+                    class="setting-row"
+                    onclick="location.href='products.html'"
+                >
+
+                    <div class="setting-icon">
+                        📦
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Manage Products
+                        </div>
+
+                        <div class="setting-description">
+                            Add, edit, and manage inventory
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+
+                <button
+                    class="setting-row"
+                    onclick="location.href='sales.html'"
+                >
+
+                    <div class="setting-icon">
+                        ₱
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Record Sale
+                        </div>
+
+                        <div class="setting-description">
+                            Record a new store transaction
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+
+                <button
+                    class="setting-row"
+                    onclick="location.href='sales-history.html'"
+                >
+
+                    <div class="setting-icon">
+                        🧾
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Sales History
+                        </div>
+
+                        <div class="setting-description">
+                            View previous transactions
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+
+                <button
+                    class="setting-row"
+                    onclick="location.href='reports.html'"
+                >
+
+                    <div class="setting-icon">
+                        📊
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Reports
+                        </div>
+
+                        <div class="setting-description">
+                            View your store performance
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATA MANAGEMENT -->
+        <section class="section">
+
+            <div class="section-title">
+                Data Management
+            </div>
+
+            <div class="settings-card">
+
+                <button
+                    class="setting-row danger"
+                    onclick="openClearSalesModal()"
+                >
+
+                    <div class="setting-icon">
+                        🧾
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Clear Sales History
+                        </div>
+
+                        <div class="setting-description">
+                            Remove all recorded sales transactions
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+
+                <button
+                    class="setting-row danger"
+                    onclick="openResetModal()"
+                >
+
+                    <div class="setting-icon">
+                        ⚠️
+                    </div>
+
+                    <div class="setting-info">
+
+                        <div class="setting-name">
+                            Reset All App Data
+                        </div>
+
+                        <div class="setting-description">
+                            Delete products, sales, account, and store data
+                        </div>
+
+                    </div>
+
+                    <div class="arrow">›</div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section class="section">
+
+            <div class="section-title">
+                About
+            </div>
+
+            <div class="about-card">
+
+                <div class="about-logo">
+                    V
+                </div>
+
+                <h3>Vendora</h3>
+
+                <span class="version">
+                    Version 1.0.0
+                </span>
+
+                <p>
+                    A simple offline store management app
+                    for managing products, recording sales,
+                    tracking transactions, and viewing reports.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+
+        <a class="nav-item" href="home.html">
+            <span>⌂</span>
+            <span>Home</span>
+        </a>
+
+        <a class="nav-item" href="products.html">
+            <span>▦</span>
+            <span>Products</span>
+        </a>
+
+        <a class="nav-item" href="sales.html">
+            <span>₱</span>
+            <span>Sales</span>
+        </a>
+
+        <a class="nav-item" href="reports.html">
+            <span>▥</span>
+            <span>Reports</span>
+        </a>
+
+        <a class="nav-item active" href="settings.html">
+            <span>⚙</span>
+            <span>More</span>
+        </a>
+
+    </nav>
+
+</div>
+
+
+<!-- =========================================
+     ACCOUNT MODAL
+========================================= -->
+
+<div
+    class="modal-backdrop"
+    id="accountModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+        <div class="modal-header">
+
+            <h3 id="accountModalTitle">
+                Create Account
+            </h3>
+
+            <button
+                class="close-btn"
+                onclick="closeAccountModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Full Name
+            </label>
+
+            <input
+                class="form-input"
+                id="accountFullName"
+                type="text"
+                placeholder="Enter your full name"
+                maxlength="60"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Email Address
+            </label>
+
+            <input
+                class="form-input"
+                id="accountEmailInput"
+                type="email"
+                placeholder="Enter your email"
+                maxlength="80"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Username
+            </label>
+
+            <input
+                class="form-input"
+                id="accountUsername"
+                type="text"
+                placeholder="Create a username"
+                maxlength="30"
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeAccountModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="save-btn"
+                onclick="saveAccount()"
+            >
+                Save Account
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     STORE MODAL
+========================================= -->
+
+<div
+    class="modal-backdrop"
+    id="storeModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+        <div class="modal-header">
+
+            <h3>
+                Store Information
+            </h3>
+
+            <button
+                class="close-btn"
+                onclick="closeStoreModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Store Name
+            </label>
+
+            <input
+                class="form-input"
+                id="storeName"
+                type="text"
+                placeholder="Enter your store name"
+                maxlength="50"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Store Description
+            </label>
+
+            <input
+                class="form-input"
+                id="storeDescription"
+                type="text"
+                placeholder="Enter a short store description"
+                maxlength="80"
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeStoreModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="save-btn"
+                onclick="saveStoreInfo()"
+            >
+                Save Information
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     CONFIRMATION MODAL
+========================================= -->
+
+<div
+    class="modal-backdrop"
+    id="confirmModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-handle"></div>
+
+        <div
+            style="
+                width:48px;
+                height:48px;
+                border-radius:15px;
+                background:#fff0f2;
+                color:#df4e5d;
+                display:grid;
+                place-items:center;
+                font-size:21px;
+                margin-bottom:12px;
+            "
+        >
+            ⚠️
+        </div>
+
+        <div class="modal-header">
+            <h3 id="modalTitle">
+                Are you sure?
+            </h3>
+        </div>
+
+        <p
+            id="modalMessage"
+            style="
+                color:var(--muted);
+                font-size:11px;
+                line-height:1.5;
+            "
+        >
+            This action cannot be undone.
+        </p>
+
+        <div class="form-actions">
+
+            <button
+                class="cancel-btn"
+                onclick="closeConfirmModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="save-btn"
+                style="background:var(--danger)"
+                id="confirmBtn"
+                onclick="confirmAction()"
+            >
+                Continue
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================
+   STORAGE
+========================================= */
+
+const PRODUCTS_KEY = "vendora_products_v1";
+const SALES_KEY = "vendora_sales_v1";
+const THEME_KEY = "vendora_theme_v1";
+
+const STORE_NAME_KEY = "vendora_store_name_v1";
+const STORE_DESCRIPTION_KEY = "vendora_store_description_v1";
+
+const ACCOUNT_KEY = "vendora_account_v1";
+
+
+let pendingAction = null;
+let accountMode = "create";
+
+
+/* =========================================
+   THEME
+========================================= */
+
+function applyTheme(){
+
+    const dark =
+        localStorage.getItem(THEME_KEY) === "dark";
+
+    document.body.classList.toggle("dark", dark);
+
+    document.getElementById("themeBtn").textContent =
+        dark ? "☀" : "☾";
+
+    document
+        .getElementById("darkToggle")
+        .classList.toggle("active", dark);
+
+}
+
+
+function toggleTheme(){
+
+    const isDark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        THEME_KEY,
+        isDark ? "light" : "dark"
+    );
+
+    applyTheme();
+
+}
+
+
+/* =========================================
+   ACCOUNT
+========================================= */
+
+function getAccount(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(ACCOUNT_KEY)
+        );
+
+    }catch(error){
+
+        return null;
+
+    }
+
+}
+
+
+function loadAccount(){
+
+    const account = getAccount();
+
+    const empty =
+        document.getElementById("emptyAccount");
+
+    const info =
+        document.getElementById("accountInfo");
+
+    if(!account){
+
+        empty.style.display = "block";
+        info.style.display = "none";
+
+        return;
+
+    }
+
+
+    empty.style.display = "none";
+    info.style.display = "block";
+
+
+    const name =
+        account.fullName || "User";
+
+    const email =
+        account.email || "No email";
+
+
+    document.getElementById(
+        "accountName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "accountEmail"
+    ).textContent = email;
+
+
+    document.getElementById(
+        "accountAvatar"
+    ).textContent =
+        name.charAt(0).toUpperCase();
+
+}
+
+
+function openAccountModal(mode){
+
+    accountMode = mode;
+
+    const account = getAccount();
+
+    document.getElementById(
+        "accountModalTitle"
+    ).textContent =
+        mode === "create"
+            ? "Create Account"
+            : "Edit Account";
+
+
+    if(mode === "edit" && account){
+
+        document.getElementById(
+            "accountFullName"
+        ).value =
+            account.fullName || "";
+
+
+        document.getElementById(
+            "accountEmailInput"
+        ).value =
+            account.email || "";
+
+
+        document.getElementById(
+            "accountUsername"
+        ).value =
+            account.username || "";
+
+
+    }else{
+
+        document.getElementById(
+            "accountFullName"
+        ).value = "";
+
+        document.getElementById(
+            "accountEmailInput"
+        ).value = "";
+
+        document.getElementById(
+            "accountUsername"
+        ).value = "";
+
+    }
+
+
+    document
+        .getElementById("accountModal")
+        .classList.add("show");
+
+}
+
+
+function closeAccountModal(){
+
+    document
+        .getElementById("accountModal")
+        .classList.remove("show");
+
+}
+
+
+function saveAccount(){
+
+    const fullName =
+        document
+            .getElementById("accountFullName")
+            .value
+            .trim();
+
+    const email =
+        document
+            .getElementById("accountEmailInput")
+            .value
+            .trim();
+
+    const username =
+        document
+            .getElementById("accountUsername")
+            .value
+            .trim();
+
+    if(!fullName){
+
+        showToast("Please enter your full name.");
+
+        return;
+
+    }
+
+
+    if(!email){
+
+        showToast("Please enter your email.");
+
+        return;
+
+    }
+
+
+    if(!username){
+
+        showToast("Please create a username.");
+
+        return;
+
+    }
+
+
+    const account = {
+
+        fullName,
+        email,
+        username,
+
+        updatedAt:
+            new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+        ACCOUNT_KEY,
+        JSON.stringify(account)
+    );
+
+
+    closeAccountModal();
+
+    loadAccount();
+
+    showToast(
+        accountMode === "create"
+            ? "Account created successfully."
+            : "Account updated successfully."
+    );
+
+}
+
+
+/* =========================================
+   STORE INFORMATION
+========================================= */
+
+function loadStoreInfo(){
+
+    const name =
+        localStorage.getItem(
+            STORE_NAME_KEY
+        );
+
+    const description =
+        localStorage.getItem(
+            STORE_DESCRIPTION_KEY
+        );
+
+
+    if(!name && !description){
+
+        document
+            .getElementById("storePreview")
+            .classList.remove("show");
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "storePreview"
+    ).classList.add("show");
+
+
+    document.getElementById(
+        "previewStoreName"
+    ).textContent =
+        name || "Unnamed Store";
+
+
+    document.getElementById(
+        "previewStoreDescription"
+    ).textContent =
+        description || "No description";
+
+
+}
+
+
+function openStoreModal(){
+
+    document.getElementById(
+        "storeName"
+    ).value =
+        localStorage.getItem(
+            STORE_NAME_KEY
+        ) || "";
+
+
+    document.getElementById(
+        "storeDescription"
+    ).value =
+        localStorage.getItem(
+            STORE_DESCRIPTION_KEY
+        ) || "";
+
+
+    document
+        .getElementById("storeModal")
+        .classList.add("show");
+
+}
+
+
+function closeStoreModal(){
+
+    document
+        .getElementById("storeModal")
+        .classList.remove("show");
+
+}
+
+
+function saveStoreInfo(){
+
+    const name =
+        document
+            .getElementById("storeName")
+            .value
+            .trim();
+
+    const description =
+        document
+            .getElementById("storeDescription")
+            .value
+            .trim();
+
+
+    if(!name){
+
+        showToast("Please enter your store name.");
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        STORE_NAME_KEY,
+        name
+    );
+
+    localStorage.setItem(
+        STORE_DESCRIPTION_KEY,
+        description
+    );
+
+
+    closeStoreModal();
+
+    loadStoreInfo();
+
+    showToast(
+        "Store information saved."
+    );
+
+}
+
+
+/* =========================================
+   DATA MANAGEMENT
+========================================= */
+
+function openClearSalesModal(){
+
+    pendingAction = "clearSales";
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Clear Sales History?";
+
+
+    document.getElementById(
+        "modalMessage"
+    ).textContent =
+        "All recorded sales transactions will be permanently deleted. Your products will remain.";
+
+
+    document.getElementById(
+        "confirmBtn"
+    ).textContent =
+        "Clear Sales";
+
+
+    document
+        .getElementById("confirmModal")
+        .classList.add("show");
+
+}
+
+
+function openResetModal(){
+
+    pendingAction = "resetAll";
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Reset All App Data?";
+
+
+    document.getElementById(
+        "modalMessage"
+    ).textContent =
+        "This will delete all products, sales, account information, and store information. This action cannot be undone.";
+
+
+    document.getElementById(
+        "confirmBtn"
+    ).textContent =
+        "Reset Everything";
+
+
+    document
+        .getElementById("confirmModal")
+        .classList.add("show");
+
+}
+
+
+function closeConfirmModal(){
+
+    pendingAction = null;
+
+    document
+        .getElementById("confirmModal")
+        .classList.remove("show");
+
+}
+
+
+function confirmAction(){
+
+    if(pendingAction === "clearSales"){
+
+        localStorage.removeItem(
+            SALES_KEY
+        );
+
+        closeConfirmModal();
+
+        showToast(
+            "Sales history cleared."
+        );
+
+        return;
+
+    }
+
+
+    if(pendingAction === "resetAll"){
+
+        localStorage.removeItem(
+            PRODUCTS_KEY
+        );
+
+        localStorage.removeItem(
+            SALES_KEY
+        );
+
+        localStorage.removeItem(
+            STORE_NAME_KEY
+        );
+
+        localStorage.removeItem(
+            STORE_DESCRIPTION_KEY
+        );
+
+        localStorage.removeItem(
+            ACCOUNT_KEY
+        );
+
+
+        closeConfirmModal();
+
+        loadAccount();
+
+        loadStoreInfo();
+
+        showToast(
+            "All app data has been reset."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   CLOSE MODALS
+========================================= */
+
+document
+    .getElementById("accountModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeAccountModal();
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("storeModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeStoreModal();
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("confirmModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeConfirmModal();
+            }
+
+        }
+    );
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeAccountModal();
+            closeStoreModal();
+            closeConfirmModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(
+        function(){
+
+            toast.classList.remove("show");
+
+        },
+        2600
+    );
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+applyTheme();
+loadAccount();
+loadStoreInfo();
+
+</script>
+
+</body>
+</html>
